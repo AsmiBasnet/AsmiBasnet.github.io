@@ -219,10 +219,15 @@
                             <div className="mb-12 flex justify-center">
                                 <div className="profile-ring">
                                     <img 
-                                        src="./assets/profile.jpg" 
+                                        src="profile.jpg" 
                                         alt="Asmi Basnet" 
                                         className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-slate-950"
-                                        onError={(e) => { e.target.src = 'https://ui-avatars.com/api/?name=Asmi+Basnet&background=020617&color=fff&size=512'; }}
+                                        onError={(e) => { 
+                                            // This is a safety fallback. If profile.jpg isn't found, 
+                                            // it shows a clean initials avatar.
+                                            e.target.onerror = null; 
+                                            e.target.src = 'https://ui-avatars.com/api/?name=Asmi+Basnet&background=020617&color=fff&size=512'; 
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -238,10 +243,10 @@
                                 "Analytical Business Intelligence professional with <span className="pink-accent font-bold">over 3 years of experience</span> in data modeling, statistical analysis, and automated reporting."
                             </p>
                             <div className="flex flex-wrap justify-center gap-6">
-                                <a href="https://linkedin.com/in/asmibasnet/" className="px-10 py-5 bg-blue-600 text-white rounded-xl font-bold flex items-center gap-3 hover:bg-blue-700 transition-all shadow-2xl shadow-blue-600/20">
+                                <a href="https://linkedin.com/in/asmibasnet/" target="_blank" className="px-10 py-5 bg-blue-600 text-white rounded-xl font-bold flex items-center gap-3 hover:bg-blue-700 transition-all shadow-2xl shadow-blue-600/20">
                                     <Icon name="linkedin" className="w-5 h-5" /> LinkedIn Profile
                                 </a>
-                                <a href="https://github.com/AsmiBasnet" className="px-10 py-5 bg-slate-900 border border-slate-800 text-white rounded-xl font-bold flex items-center gap-3 hover:bg-slate-800 transition-all">
+                                <a href="https://github.com/AsmiBasnet" target="_blank" className="px-10 py-5 bg-slate-900 border border-slate-800 text-white rounded-xl font-bold flex items-center gap-3 hover:bg-slate-800 transition-all">
                                     <Icon name="github" className="w-5 h-5" /> GitHub Repos
                                 </a>
                             </div>
@@ -250,7 +255,7 @@
 
                     <section id="skills" className="py-32 px-6 bg-slate-900/20 border-y border-white/5">
                         <div className="max-w-7xl mx-auto text-center">
-                            <h2 className="text-[11px] font-black text-blue-400 uppercase tracking-[0.6em] mb-20 uppercase">Technical Infrastructure</h2>
+                            <h2 className="text-[11px] font-black text-blue-400 uppercase tracking-[0.6em] mb-20">Technical Infrastructure</h2>
                             <div className="grid lg:grid-cols-3 gap-10">
                                 {skills.map((skill, idx) => (
                                     <div key={idx} className="p-10 rounded-[2.5rem] glass-card group text-left">
@@ -322,7 +327,7 @@
                     <section id="projects" className="py-32 px-6 bg-slate-900/10 border-t border-white/5">
                         <div className="max-w-7xl mx-auto">
                             <div className="text-center mb-24">
-                                <h2 className="text-[11px] font-black text-pink-200 uppercase tracking-[0.6em] mb-4 uppercase">Applied Logic</h2>
+                                <h2 className="text-[11px] font-black text-pink-200 uppercase tracking-[0.6em] mb-4">Applied Logic</h2>
                                 <h3 className="text-5xl font-[900] text-white tracking-tighter blue-glow uppercase">Technical Portfolio</h3>
                             </div>
                             <div className="grid md:grid-cols-2 gap-12">
@@ -373,10 +378,10 @@
                                     <Icon name="mail" className="w-5 h-5" /> Start Discussion
                                 </a>
                                 <div className="flex gap-6">
-                                    <a href="https://linkedin.com/in/asmibasnet/" className="p-6 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 hover:text-blue-400 transition-colors">
+                                    <a href="https://linkedin.com/in/asmibasnet/" target="_blank" className="p-6 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 hover:text-blue-400 transition-colors">
                                         <Icon name="linkedin" className="w-6 h-6" />
                                     </a>
-                                    <a href="https://github.com/AsmiBasnet" className="p-6 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 hover:text-pink-200 transition-colors">
+                                    <a href="https://github.com/AsmiBasnet" target="_blank" className="p-6 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 hover:text-pink-200 transition-colors">
                                         <Icon name="github" className="w-6 h-6" />
                                     </a>
                                 </div>

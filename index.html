@@ -5,14 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asmi Basnet | Data & AI Enthusiast</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- React & ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <!-- Babel for JSX -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
@@ -163,6 +159,14 @@
                     githubUrl: "https://github.com/AsmiBasnet/caregap"
                 },
                 {
+                    title: "E-commerce Analytics SQL",
+                    description: "Engineered high-performance SQL scripts for comprehensive e-commerce telemetry, focusing on customer lifecycle, cohort analysis, and revenue attribution.",
+                    tags: ["PostgreSQL", "Data Modeling", "Cohort Analysis", "ETL"],
+                    icon: "shopping-cart",
+                    img: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&q=80&w=800",
+                    githubUrl: "https://github.com/AsmiBasnet/ecommerce-analytics-sql"
+                },
+                {
                     title: "Agentic RAG Orchestration",
                     description: "Architected a multi-agent autonomous system using GPT-4o and the Agno framework for real-time market data synthesis.",
                     tags: ["GPT-4o", "Agno", "Python", "Vector RAG"],
@@ -176,14 +180,6 @@
                     tags: ["SQL", "Python", "Seaborn", "Matplotlib"],
                     icon: "music",
                     img: "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?auto=format&fit=crop&q=80&w=800",
-                    githubUrl: "https://github.com/AsmiBasnet"
-                },
-                {
-                    title: "Predicting Customer Sales",
-                    description: "Built predictive models using Random Forest and Gradient Boosting, achieving R² = 0.99 for loyalty segment identification.",
-                    tags: ["Scikit-learn", "Random Forest", "Regression"],
-                    icon: "bar-chart-4",
-                    img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
                     githubUrl: "https://github.com/AsmiBasnet"
                 }
             ];
@@ -223,8 +219,6 @@
                                         alt="Asmi Basnet" 
                                         className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-slate-950"
                                         onError={(e) => { 
-                                            // This is a safety fallback. If profile.jpg isn't found, 
-                                            // it shows a clean initials avatar.
                                             e.target.onerror = null; 
                                             e.target.src = 'https://ui-avatars.com/api/?name=Asmi+Basnet&background=020617&color=fff&size=512'; 
                                         }}
@@ -394,7 +388,7 @@
                             <p className="text-blue-500/60 font-black text-[10px] uppercase tracking-[0.5em] mb-6">High-Entropy Architecture • STL, MO</p>
                             <div className="flex items-center justify-center gap-4 text-[10px] font-black uppercase text-slate-600 tracking-[0.2em]">
                                 <Icon name="cpu" className="w-4 h-4" />
-                                <span>© 2024 ASMI BASNET</span>
+                                <span>© 2026 ASMI BASNET</span>
                             </div>
                         </div>
                     </footer>

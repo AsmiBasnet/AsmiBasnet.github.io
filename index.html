@@ -1,404 +1,1179 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asmi Basnet | Data & AI Enthusiast</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap');
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Asmi Basnet — Data & AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-            background-color: #020617;
-        }
+:root {
+  --ink: #0d0b10;
+  --paper: #f8f3ef;
+  --rose: #e8b4b8;
+  --rose-deep: #c97d8a;
+  --rose-pale: #fdf0f1;
+  --gold: #c9a97d;
+  --gold-pale: #f7eed8;
+  --slate: #8c8494;
+  --slate-dark: #3d3545;
+  --accent-blue: #7fb3c8;
+  --white: #ffffff;
+  --card-bg: rgba(255,255,255,0.55);
+  --serif: 'Cormorant Garamond', serif;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'Space Mono', monospace;
+}
 
-        .bg-gradient-mesh {
-            background-image:
-                radial-gradient(at 0% 0%, hsla(210, 80%, 12%, 1) 0, transparent 50%),
-                radial-gradient(at 100% 0%, hsla(330, 60%, 10%, 1) 0, transparent 50%),
-                radial-gradient(at 50% 100%, hsla(220, 70%, 8%, 1) 0, transparent 50%);
-        }
+html { scroll-behavior: smooth; }
 
-        .glass-card {
-            background: rgba(15, 23, 42, 0.4);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(186, 230, 253, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            overflow: hidden;
-        }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  overflow-x: hidden;
+  cursor: none;
+}
 
-        .glass-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(244, 114, 182, 0.3);
-            background: rgba(15, 23, 42, 0.6);
-            box-shadow: 0 20px 50px -15px rgba(14, 165, 233, 0.2);
-        }
+/* ── CUSTOM CURSOR ── */
+#cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--rose-deep);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+  mix-blend-mode: multiply;
+}
+#cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid var(--rose);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.4s, height 0.4s, border-color 0.3s;
+}
+body:has(a:hover) #cursor, body:has(button:hover) #cursor { width: 20px; height: 20px; background: var(--gold); }
+body:has(a:hover) #cursor-ring, body:has(button:hover) #cursor-ring { width: 60px; height: 60px; border-color: var(--gold); }
 
-        .nav-blur {
-            background: rgba(2, 6, 23, 0.8);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
+/* ── NOISE TEXTURE ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
 
-        .pink-accent {
-            color: #fce7f3;
-        }
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; width: 100%; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 60px;
+  transition: all 0.5s;
+}
+nav.scrolled {
+  padding: 16px 60px;
+  background: rgba(248, 243, 239, 0.88);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(232, 180, 184, 0.25);
+}
+.nav-logo {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  text-decoration: none;
+  cursor: none;
+}
+.nav-logo span { color: var(--rose-deep); }
+.nav-links { display: flex; align-items: center; gap: 40px; }
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--slate);
+  text-decoration: none;
+  transition: color 0.3s;
+  cursor: none;
+}
+.nav-links a:hover { color: var(--rose-deep); }
+.nav-cta {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper) !important;
+  padding: 12px 24px;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s !important;
+  cursor: none;
+}
+.nav-cta:hover { background: var(--rose-deep) !important; color: white !important; }
 
-        .hero-gradient {
-            background: linear-gradient(135deg, #f8fafc 30%, #7dd3fc 60%, #f472b6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 160px 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg-circle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-bg-circle.c1 {
+  width: 700px; height: 700px;
+  right: -200px; top: -200px;
+  background: radial-gradient(circle, rgba(232,180,184,0.18) 0%, transparent 70%);
+  animation: floatA 8s ease-in-out infinite;
+}
+.hero-bg-circle.c2 {
+  width: 400px; height: 400px;
+  left: 30%; bottom: -100px;
+  background: radial-gradient(circle, rgba(201,169,125,0.12) 0%, transparent 70%);
+  animation: floatB 10s ease-in-out infinite;
+}
+@keyframes floatA { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px, 30px)} }
+@keyframes floatB { 0%,100%{transform:translate(0,0)} 50%{transform:translate(20px,-20px)} }
 
-        .blue-glow {
-            text-shadow: 0 0 20px rgba(14, 165, 233, 0.4);
-        }
+.hero-left { position: relative; z-index: 2; }
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--rose-deep);
+  margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.1s forwards;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block; width: 32px; height: 1px;
+  background: var(--rose-deep);
+}
+.hero-name {
+  font-family: var(--serif);
+  font-size: clamp(4rem, 7vw, 7.5rem);
+  font-weight: 300;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.25s forwards;
+}
+.hero-name em {
+  font-style: italic;
+  color: var(--rose-deep);
+}
+.hero-title-banner {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.38s forwards;
+}
+.title-word {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 7.5vw, 8rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  text-transform: uppercase;
+}
+.title-italic {
+  font-style: italic;
+  font-weight: 300;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--rose-deep);
+  letter-spacing: -0.01em;
+}
 
-        .profile-ring {
-            position: relative;
-            padding: 4px;
-            background: linear-gradient(135deg, #3b82f6, #ec4899);
-            border-radius: 9999px;
-            display: inline-block;
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.3);
-        }
-    </style>
+/* Rotating roles */
+.rotating-roles {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 36px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--slate);
+  opacity: 0;
+  animation: fadeUp 0.9s 0.5s forwards;
+  height: 22px;
+  overflow: hidden;
+}
+.roles-prefix, .roles-suffix { white-space: nowrap; }
+.roles-wheel {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  height: 22px;
+  overflow: hidden;
+}
+.role {
+  display: block;
+  color: var(--rose-deep);
+  font-weight: 700;
+  white-space: nowrap;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
+  position: absolute;
+  top: 0; left: 0;
+  line-height: 22px;
+}
+.role.active {
+  transform: translateY(0);
+  opacity: 1;
+  position: relative;
+}
+.role.exit {
+  transform: translateY(-100%);
+  opacity: 0;
+  position: absolute;
+}
+.hero-desc {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--slate-dark);
+  max-width: 480px;
+  margin-bottom: 52px;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.4s forwards;
+}
+.hero-desc strong { color: var(--ink); font-weight: 500; }
+.hero-actions {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.9s 0.55s forwards;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  background: var(--ink); color: var(--paper);
+  padding: 16px 32px; border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.3s;
+  cursor: none;
+}
+.btn-primary:hover { background: var(--rose-deep); transform: translateY(-2px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+  background: transparent; color: var(--ink);
+  padding: 15px 32px; border-radius: 2px;
+  border: 1px solid rgba(13,11,16,0.2);
+  text-decoration: none;
+  transition: border-color 0.3s, color 0.3s, transform 0.3s;
+  cursor: none;
+}
+.btn-ghost:hover { border-color: var(--rose-deep); color: var(--rose-deep); transform: translateY(-2px); }
+
+/* HERO RIGHT — photo + stats */
+.hero-right {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 32px;
+  opacity: 0;
+  animation: fadeIn 1.2s 0.6s forwards;
+}
+.photo-frame {
+  position: relative;
+  width: 320px; height: 400px;
+}
+.photo-bg-shape {
+  position: absolute;
+  width: 280px; height: 360px;
+  top: 20px; left: 20px;
+  background: linear-gradient(135deg, var(--rose) 0%, var(--gold) 100%);
+  border-radius: 4px;
+  opacity: 0.25;
+}
+.photo-border-shape {
+  position: absolute;
+  width: 280px; height: 360px;
+  top: 10px; left: 10px;
+  border: 1px solid var(--rose);
+  border-radius: 4px;
+  opacity: 0.5;
+}
+.photo-img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 280px; height: 360px;
+  object-fit: cover;
+  border-radius: 4px;
+  filter: saturate(0.9);
+}
+.photo-tag {
+  position: absolute;
+  bottom: -10px; right: 0px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: 2px;
+}
+.hero-stats {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: rgba(13,11,16,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  width: 320px;
+}
+.stat-item {
+  background: var(--paper);
+  padding: 20px 16px;
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-num span { color: var(--rose-deep); }
+.stat-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+
+/* ── MARQUEE ── */
+.marquee-strip {
+  width: 100%; overflow: hidden;
+  background: var(--ink);
+  padding: 18px 0;
+  position: relative;
+}
+.marquee-track {
+  display: flex; gap: 0;
+  animation: marquee 28s linear infinite;
+  white-space: nowrap;
+}
+.marquee-item {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--rose);
+  padding: 0 48px;
+  flex-shrink: 0;
+}
+.marquee-item.dot {
+  color: var(--gold);
+  font-style: normal;
+  font-size: 0.5rem;
+  vertical-align: middle;
+  padding: 0 10px;
+}
+@keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ── SECTIONS ── */
+section { position: relative; z-index: 1; }
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--rose-deep);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label::before {
+  content: ''; display: block;
+  width: 24px; height: 1px; background: var(--rose-deep);
+}
+
+/* ── SKILLS ── */
+#skills {
+  padding: 120px 60px;
+  background: var(--ink);
+  color: var(--paper);
+}
+#skills .section-label { color: var(--rose); }
+#skills .section-label::before { background: var(--rose); }
+.skills-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 80px;
+}
+.skills-title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--paper);
+}
+.skills-title em { font-style: italic; color: var(--rose); }
+.skills-subtitle {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: rgba(248,243,239,0.5);
+  max-width: 300px;
+  text-align: right;
+  line-height: 1.7;
+}
+.skills-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+}
+.skill-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 48px 40px;
+  transition: background 0.5s, transform 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+.skill-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--rose), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s;
+}
+.skill-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-4px); }
+.skill-card:hover::before { transform: scaleX(1); }
+.skill-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(248,243,239,0.25);
+  letter-spacing: 0.2em;
+  margin-bottom: 32px;
+}
+.skill-icon {
+  font-size: 2rem; margin-bottom: 20px; display: block;
+}
+.skill-name {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--paper);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.skill-desc {
+  font-size: 13px;
+  color: rgba(248,243,239,0.5);
+  line-height: 1.8;
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+.skill-pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.pill {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border: 1px solid rgba(232,180,184,0.2);
+  color: var(--rose);
+  border-radius: 1px;
+  transition: background 0.3s, border-color 0.3s;
+}
+.pill:hover { background: rgba(232,180,184,0.08); border-color: var(--rose); }
+
+/* ── EXPERIENCE ── */
+#experience {
+  padding: 120px 60px;
+  background: var(--rose-pale);
+}
+.exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; margin-top: 60px; }
+.exp-item { position: relative; }
+.exp-year {
+  font-family: var(--mono);
+  font-size: 9px; letter-spacing: 0.2em;
+  color: var(--rose-deep);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid rgba(201,125,138,0.3);
+  border-radius: 1px;
+}
+.exp-role {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.exp-company {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+.exp-desc {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--slate-dark);
+  font-weight: 300;
+}
+.exp-divider {
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, var(--rose), var(--gold));
+  margin-bottom: 32px;
+}
+
+/* ── EDUCATION ── */
+#education {
+  padding: 120px 60px;
+  background: var(--paper);
+}
+.edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 60px; }
+.edu-card {
+  padding: 48px;
+  background: var(--white);
+  border: 1px solid rgba(232,180,184,0.2);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.4s, transform 0.4s;
+}
+.edu-card:hover {
+  box-shadow: 0 24px 60px -20px rgba(201,125,138,0.2);
+  transform: translateY(-4px);
+}
+.edu-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--rose), var(--gold));
+}
+.edu-period {
+  font-family: var(--mono);
+  font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--slate);
+  margin-bottom: 20px;
+}
+.edu-degree {
+  font-family: var(--serif);
+  font-size: 1.7rem; font-weight: 600;
+  color: var(--ink); line-height: 1.2;
+  margin-bottom: 8px;
+}
+.edu-inst {
+  font-family: var(--mono);
+  font-size: 10px; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--rose-deep);
+  margin-bottom: 24px;
+}
+.edu-desc {
+  font-size: 13px; line-height: 1.9;
+  color: var(--slate-dark); font-weight: 300;
+}
+
+/* ── PROJECTS ── */
+#projects {
+  padding: 120px 60px;
+  background: var(--ink);
+  color: var(--paper);
+}
+#projects .section-label { color: var(--rose); }
+#projects .section-label::before { background: var(--rose); }
+.projects-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 80px;
+}
+.projects-title {
+  font-family: var(--serif);
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 300; line-height: 1;
+  color: var(--paper);
+}
+.projects-title em { font-style: italic; color: var(--rose); }
+.proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.proj-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.5s, box-shadow 0.5s, border-color 0.5s;
+  cursor: none;
+}
+.proj-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,0.5);
+  border-color: rgba(232,180,184,0.3);
+}
+.proj-img-wrap {
+  position: relative;
+  height: 220px; overflow: hidden;
+}
+.proj-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.7s, filter 0.5s;
+  filter: saturate(0.6) brightness(0.7);
+}
+.proj-card:hover .proj-img-wrap img {
+  transform: scale(1.06);
+  filter: saturate(0.8) brightness(0.75);
+}
+.proj-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(13,11,16,0.9) 0%, transparent 60%);
+}
+.proj-img-num {
+  position: absolute; top: 20px; right: 20px;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.2em; color: rgba(248,243,239,0.4);
+  background: rgba(13,11,16,0.6); padding: 6px 10px;
+  border-radius: 2px;
+}
+.proj-body { padding: 36px 36px 32px; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.proj-tag {
+  font-family: var(--mono); font-size: 8px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--rose); padding: 4px 10px;
+  border: 1px solid rgba(232,180,184,0.2);
+  border-radius: 1px;
+}
+.proj-title {
+  font-family: var(--serif);
+  font-size: 1.6rem; font-weight: 600;
+  color: var(--paper); line-height: 1.2;
+  margin-bottom: 14px;
+}
+.proj-desc {
+  font-size: 13px; line-height: 1.85;
+  color: rgba(248,243,239,0.5);
+  font-weight: 300; margin-bottom: 28px;
+}
+.proj-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--rose); text-decoration: none;
+  transition: gap 0.3s, color 0.3s;
+  cursor: none;
+}
+.proj-link:hover { color: var(--gold); gap: 14px; }
+.proj-link svg { width: 12px; height: 12px; }
+
+/* ── CTA ── */
+#contact {
+  padding: 160px 60px;
+  background: linear-gradient(135deg, #fdf0f1 0%, #f8f3ef 40%, #f7eed8 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.contact-bg-rose {
+  position: absolute;
+  width: 600px; height: 600px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(232,180,184,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+.contact-eyebrow {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.35em; text-transform: uppercase;
+  color: var(--rose-deep); margin-bottom: 28px;
+  position: relative; z-index: 2;
+}
+.contact-title {
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  font-weight: 300; line-height: 0.95;
+  color: var(--ink); margin-bottom: 32px;
+  position: relative; z-index: 2;
+}
+.contact-title em { font-style: italic; color: var(--rose-deep); }
+.contact-sub {
+  font-size: 15px; line-height: 1.8;
+  color: var(--slate-dark); font-weight: 300;
+  max-width: 480px; margin: 0 auto 60px;
+  position: relative; z-index: 2;
+}
+.contact-actions {
+  display: flex; justify-content: center; align-items: center;
+  gap: 16px; flex-wrap: wrap;
+  position: relative; z-index: 2;
+}
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px;
+  border: 1px solid rgba(13,11,16,0.15);
+  border-radius: 2px;
+  text-decoration: none; color: var(--slate-dark);
+  transition: border-color 0.3s, color 0.3s, transform 0.3s;
+  cursor: none;
+}
+.icon-btn:hover { border-color: var(--rose-deep); color: var(--rose-deep); transform: translateY(-2px); }
+.icon-btn svg { width: 18px; height: 18px; }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--ink);
+  color: rgba(248,243,239,0.3);
+  padding: 40px 60px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+footer .footer-logo {
+  font-family: var(--serif); font-size: 1.1rem;
+  font-style: italic; color: var(--rose);
+  text-decoration: none;
+}
+footer .footer-mono {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.25em; text-transform: uppercase;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 20px 24px; }
+  nav.scrolled { padding: 14px 24px; }
+  .nav-links { display: none; }
+  #hero { grid-template-columns: 1fr; padding: 140px 24px 60px; text-align: center; }
+  .hero-actions { justify-content: center; }
+  .hero-right { margin-top: 40px; }
+  .hero-eyebrow { justify-content: center; }
+  #skills, #experience, #education, #projects, #contact { padding: 80px 24px; }
+  .skills-grid, .exp-grid, .edu-grid, .proj-grid { grid-template-columns: 1fr; }
+  .skills-header, .projects-header { flex-direction: column; gap: 20px; align-items: flex-start; }
+  .skills-subtitle { text-align: left; max-width: none; }
+  footer { flex-direction: column; gap: 16px; text-align: center; padding: 32px 24px; }
+}
+</style>
 </head>
+<body>
 
-<body class="bg-gradient-mesh text-slate-200 selection:bg-pink-500/30">
-    <div id="root"></div>
+<!-- Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+<!-- Nav -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Asmi <span>Basnet</span></a>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#education">Education</a>
+    <a href="#projects">Projects</a>
+    <a href="mailto:asmibas18@gmail.com" class="nav-cta">Hire Me</a>
+  </div>
+</nav>
 
-        const Icon = ({ name, className = "w-6 h-6" }) => {
-            useEffect(() => {
-                if (window.lucide) lucide.createIcons();
-            }, [name]);
-            return <i data-lucide={name} className={className}></i>;
-        };
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
 
-        const App = () => {
-            const [scrolled, setScrolled] = useState(false);
+  <div class="hero-left">
+    <div class="hero-eyebrow">AI & Analytics Professional — St. Louis, MO</div>
+    <h1 class="hero-name">
+      <em>Asmi</em><br>Basnet
+    </h1>
+    <div class="hero-title-banner">
+      <span class="title-word">Data &</span>
+      <span class="title-word title-italic">AI</span>
+    </div>
+    <div class="rotating-roles">
+      <span class="roles-prefix">Open to </span>
+      <span class="roles-wheel">
+        <span class="role active">BI &amp; Data Analyst</span>
+        <span class="role">Analytics Engineer</span>
+        <span class="role">ML Engineer</span>
+        <span class="role">AI Researcher</span>
+      </span>
+      <span class="roles-suffix"> roles</span>
+    </div>
+    <p class="hero-desc">
+      <strong>3+ years</strong> turning messy data into executive clarity — across machine learning, BI dashboards, and agentic AI systems. I build things that are fast, precise, and beautiful.
+    </p>
+    <div class="hero-actions">
+      <a href="mailto:asmibas18@gmail.com" class="btn-primary">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Let's Talk
+      </a>
+      <a href="https://github.com/AsmiBasnet" target="_blank" class="btn-ghost">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        View GitHub
+      </a>
+    </div>
+  </div>
 
-            useEffect(() => {
-                const handleScroll = () => setScrolled(window.scrollY > 20);
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
+  <div class="hero-right">
+    <div class="photo-frame">
+      <div class="photo-bg-shape"></div>
+      <div class="photo-border-shape"></div>
+      <img 
+        class="photo-img"
+        src="profile.jpg"
+        alt="Asmi Basnet"
+        onerror="this.src='https://ui-avatars.com/api/?name=AB&background=e8b4b8&color=0d0b10&size=512&bold=true&font-size=0.33'"
+      />
+      <div class="photo-tag">STL, MO ✦ Open to Work</div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">3<span>+</span></div>
+        <div class="stat-label">Years Exp</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" style="font-size:1.6rem">M.S.</div>
+        <div class="stat-label">Analytics</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Projects</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-            const skills = [
-                {
-                    category: "High-Entropy Architecture",
-                    description: "Engineering immutable production-grade data environments. I specialize in recursive logic and schema-level optimization for high-volume ETL resilience.",
-                    icon: "layers",
-                    color: "text-sky-400",
-                    items: ["Recursive CTEs & SQL Logic", "Vector DB Orchestration (Agno)", "Automated ELT Architectures", "Schema Normalization", "Data Integrity Automation"]
-                },
-                {
-                    category: "Neural Engineering",
-                    description: "Scaling deep learning frameworks. Focus on pre-trained identity mapping stability and self-attention weight telemetry for classification.",
-                    icon: "cpu",
-                    color: "text-pink-200",
-                    items: ["Transformer Fine-Tuning", "ResNet Identity Mapping", "Sequential Convergence (GRU/LSTM)", "Attention Weight Telemetry", "Hyperparameter Grid Search"]
-                },
-                {
-                    category: "Tactical BI",
-                    description: "Quantizing ambiguous requirements into actionable decision paths. Bridging high-dimensional raw telemetry and executive ROI outcomes.",
-                    icon: "trending-up",
-                    color: "text-blue-300",
-                    items: ["Advanced DAX & Power Query", "Metric Semantic Definition", "Executive Dashboard UX", "SaaS Growth Attribution", "Stakeholder Translation"]
-                }
-            ];
+<!-- Marquee -->
+<div class="marquee-strip" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item">SQL Architecture</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">Machine Learning</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">Power BI Dashboards</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">RAG Systems</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">Transformer Fine-Tuning</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">Agentic AI</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">ETL Pipelines</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">Vector Databases</span><span class="marquee-item dot">◆</span>
+    <!-- duplicate for infinite loop -->
+    <span class="marquee-item">SQL Architecture</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">Machine Learning</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">Power BI Dashboards</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">RAG Systems</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">Transformer Fine-Tuning</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">Agentic AI</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">ETL Pipelines</span><span class="marquee-item dot">◆</span>
+    <span class="marquee-item">Vector Databases</span><span class="marquee-item dot">◆</span>
+  </div>
+</div>
 
-            const experience = [
-                {
-                    company: "Saint Louis University",
-                    role: "Data Analyst Intern",
-                    period: "June 2024 - August 2024",
-                    description: "Orchestrated the technical lifecycle of institutional analytical surfaces. Engineered optimized extraction pipelines using recursive SQL transforms and CTE-driven aggregations, reducing reporting latency by 40%."
-                },
-                {
-                    company: "Entegra Sources Pvt Ltd. (Mayahold)",
-                    role: "Systems Research Analyst",
-                    period: "Dec 2022 - June 2023",
-                    description: "Led simulation-driven research for embedded system architectures using Python and MATLAB. Focused on real-time reliability validation and edge-case failure identification."
-                }
-            ];
+<!-- Skills -->
+<section id="skills">
+  <div class="skills-header">
+    <div>
+      <div class="section-label reveal">01 — Technical Infrastructure</div>
+      <h2 class="skills-title reveal reveal-delay-1">What I<br><em>Build</em></h2>
+    </div>
+    <p class="skills-subtitle reveal">Engineering immutable, production-grade systems — from data architecture to neural networks to executive BI.</p>
+  </div>
+  <div class="skills-grid">
 
-            const education = [
-                {
-                    institution: "Saint Louis University",
-                    degree: "Masters in Analytics",
-                    period: "Expected May 2026",
-                    description: "Coursework: Bayesian Modeling, Data Communication, Machine Learning, Data Visualization, Statistical Programming."
-                },
-                {
-                    institution: "Tribhuvan University",
-                    degree: "B.E. in Electronics & Communication Engineering",
-                    period: "2017 - 2023",
-                    description: "Final-Year Project: Designed and implemented a sensor-based smart monitoring system using microcontrollers and embedded C/C++."
-                }
-            ];
+    <div class="skill-card reveal">
+      <div class="skill-num">01</div>
+      <span class="skill-icon">⬡</span>
+      <h3 class="skill-name">Data Architecture</h3>
+      <p class="skill-desc">Engineering high-volume ETL pipelines, recursive SQL transforms, and schema-level optimization for resilient production environments.</p>
+      <div class="skill-pills">
+        <span class="pill">Recursive CTEs</span>
+        <span class="pill">Vector DB / Agno</span>
+        <span class="pill">Automated ELT</span>
+        <span class="pill">Schema Design</span>
+        <span class="pill">Data Integrity</span>
+      </div>
+    </div>
 
-            const projects = [
-                {
-                    title: "CareGap Analytics — Patient Risk",
-                    description: "Developed a patient risk management system using Django, integrating a RAG pipeline powered by FAISS and a local LLaMA model.",
-                    tags: ["Django", "RAG", "FAISS", "Ollama"],
-                    icon: "heart-pulse",
-                    img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800",
-                    githubUrl: "https://github.com/AsmiBasnet/caregap"
-                },
-                {
-                    title: "E-commerce Analytics SQL",
-                    description: "Engineered high-performance SQL scripts for comprehensive e-commerce telemetry, focusing on customer lifecycle, cohort analysis, and revenue attribution.",
-                    tags: ["PostgreSQL", "Data Modeling", "Cohort Analysis", "ETL"],
-                    icon: "shopping-cart",
-                    img: "https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&q=80&w=800",
-                    githubUrl: "https://github.com/AsmiBasnet/ecommerce-analytics-sql"
-                },
-                {
-                    title: "Agentic RAG Orchestration",
-                    description: "Architected a multi-agent autonomous system using GPT-4o and the Agno framework for real-time market data synthesis.",
-                    tags: ["GPT-4o", "Agno", "Python", "Vector RAG"],
-                    icon: "zap",
-                    img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
-                    githubUrl: "https://github.com/AsmiBasnet/agentic-rag"
-                },
-                {
-                    title: "Spotify Music Trend Analysis",
-                    description: "Queried large-scale Spotify datasets with SQL and Python to perform trend analysis on genres and track duration.",
-                    tags: ["SQL", "Python", "Seaborn", "Matplotlib"],
-                    icon: "music",
-                    img: "https://images.unsplash.com/photo-1614680376593-902f74cf0d41?auto=format&fit=crop&q=80&w=800",
-                    githubUrl: "https://github.com/AsmiBasnet"
-                }
-            ];
+    <div class="skill-card reveal reveal-delay-1">
+      <div class="skill-num">02</div>
+      <span class="skill-icon">◈</span>
+      <h3 class="skill-name">Neural Engineering</h3>
+      <p class="skill-desc">Scaling deep learning frameworks — transformer fine-tuning, sequential models, and attention weight telemetry for production classification.</p>
+      <div class="skill-pills">
+        <span class="pill">Transformer Fine-Tuning</span>
+        <span class="pill">ResNet / Identity Map</span>
+        <span class="pill">GRU / LSTM</span>
+        <span class="pill">Attention Telemetry</span>
+        <span class="pill">Hyperparameter Search</span>
+      </div>
+    </div>
 
-            return (
-                <div className="relative min-h-screen">
-                    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${scrolled ? 'py-4 nav-blur shadow-xl' : 'py-8'}`}>
-                        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-                            <div className="flex items-center gap-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                                <span className="text-xl font-black text-white uppercase tracking-[0.2em] group-hover:text-pink-200 transition-colors">
-                                    ASMI BASNET
-                                </span>
-                            </div>
-                            <div className="hidden md:flex items-center gap-10">
-                                {['Skills', 'Experience', 'Education', 'Projects'].map(item => (
-                                    <button
-                                        key={item}
-                                        onClick={() => document.getElementById(item.toLowerCase()).scrollIntoView({ behavior: 'smooth' })}
-                                        className="text-[10px] font-bold text-slate-400 hover:text-white transition-colors uppercase tracking-[0.3em]"
-                                    >
-                                        {item}
-                                    </button>
-                                ))}
-                                <a href="mailto:asmibas18@gmail.com" className="px-6 py-2.5 bg-blue-600 text-white rounded-lg font-bold text-[10px] uppercase tracking-widest hover:bg-pink-600 transition-all shadow-lg shadow-blue-500/20">
-                                    Hire Me
-                                </a>
-                            </div>
-                        </div>
-                    </nav>
+    <div class="skill-card reveal reveal-delay-2">
+      <div class="skill-num">03</div>
+      <span class="skill-icon">◉</span>
+      <h3 class="skill-name">Business Intelligence</h3>
+      <p class="skill-desc">Bridging high-dimensional raw telemetry and executive ROI outcomes through semantic metrics, advanced DAX, and stakeholder translation.</p>
+      <div class="skill-pills">
+        <span class="pill">Advanced DAX</span>
+        <span class="pill">Power Query</span>
+        <span class="pill">Metric Semantics</span>
+        <span class="pill">Executive UX</span>
+        <span class="pill">SaaS Attribution</span>
+      </div>
+    </div>
 
-                    <section id="home" className="pt-48 pb-32 px-6 text-center">
-                        <div className="max-w-5xl mx-auto">
-                            <div className="mb-12 flex justify-center">
-                                <div className="profile-ring">
-                                    <img 
-                                        src="profile.jpg" 
-                                        alt="Asmi Basnet" 
-                                        className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-slate-950"
-                                        onError={(e) => { 
-                                            e.target.onerror = null; 
-                                            e.target.src = 'https://ui-avatars.com/api/?name=Asmi+Basnet&background=020617&color=fff&size=512'; 
-                                        }}
-                                    />
-                                </div>
-                            </div>
+  </div>
+</section>
 
-                            <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-12 rounded-full border border-blue-500/30 bg-blue-500/5 text-blue-300 text-[10px] font-black uppercase tracking-[0.4em]">
-                                <Icon name="zap" className="w-3 h-3" /> Data & AI Enthusiast
-                            </div>
-                            <h1 className="text-6xl md:text-[6rem] font-[800] mb-8 tracking-tighter leading-[1] hero-gradient">
-                                Turning Complex Data <br />
-                                into Actionable Insights
-                            </h1>
-                            <p className="text-xl text-slate-400 mb-14 max-w-2xl mx-auto leading-relaxed font-medium italic">
-                                "Analytical Business Intelligence professional with <span className="pink-accent font-bold">over 3 years of experience</span> in data modeling, statistical analysis, and automated reporting."
-                            </p>
-                            <div className="flex flex-wrap justify-center gap-6">
-                                <a href="https://linkedin.com/in/asmibasnet/" target="_blank" className="px-10 py-5 bg-blue-600 text-white rounded-xl font-bold flex items-center gap-3 hover:bg-blue-700 transition-all shadow-2xl shadow-blue-600/20">
-                                    <Icon name="linkedin" className="w-5 h-5" /> LinkedIn Profile
-                                </a>
-                                <a href="https://github.com/AsmiBasnet" target="_blank" className="px-10 py-5 bg-slate-900 border border-slate-800 text-white rounded-xl font-bold flex items-center gap-3 hover:bg-slate-800 transition-all">
-                                    <Icon name="github" className="w-5 h-5" /> GitHub Repos
-                                </a>
-                            </div>
-                        </div>
-                    </section>
+<!-- Experience -->
+<section id="experience">
+  <div>
+    <div class="section-label reveal">02 — Work History</div>
+    <h2 class="skills-title reveal reveal-delay-1" style="font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,5rem);font-weight:300;line-height:1;color:var(--ink)">Career <em style="font-style:italic;color:var(--rose-deep)">Path</em></h2>
+  </div>
+  <div class="exp-grid">
 
-                    <section id="skills" className="py-32 px-6 bg-slate-900/20 border-y border-white/5">
-                        <div className="max-w-7xl mx-auto text-center">
-                            <h2 className="text-[11px] font-black text-blue-400 uppercase tracking-[0.6em] mb-20">Technical Infrastructure</h2>
-                            <div className="grid lg:grid-cols-3 gap-10">
-                                {skills.map((skill, idx) => (
-                                    <div key={idx} className="p-10 rounded-[2.5rem] glass-card group text-left">
-                                        <div className={`w-14 h-14 rounded-2xl bg-slate-900 border border-white/10 ${skill.color} p-4 mb-8 flex items-center justify-center transition-all group-hover:scale-110 group-hover:rotate-6 shadow-xl`}>
-                                            <Icon name={skill.icon} />
-                                        </div>
-                                        <h3 className="text-2xl font-extrabold text-white mb-4 tracking-tight uppercase">{skill.category}</h3>
-                                        <p className="text-sm text-slate-400 mb-8 leading-relaxed font-medium italic">{skill.description}</p>
-                                        <ul className="space-y-4">
-                                            {skill.items.map((item, i) => (
-                                                <li key={i} className="flex items-center gap-4 text-slate-300">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                                                    <span className="text-[11px] font-black tracking-widest uppercase">{item}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
+    <div class="exp-item reveal reveal-delay-1">
+      <div class="exp-divider"></div>
+      <div class="exp-year">June 2024 – August 2024</div>
+      <h3 class="exp-role">Data Analyst<br>Intern</h3>
+      <div class="exp-company">Saint Louis University</div>
+      <p class="exp-desc">Orchestrated the technical lifecycle of institutional analytical surfaces. Engineered optimized extraction pipelines using recursive SQL transforms and CTE-driven aggregations — reducing reporting latency by <strong>40%</strong>.</p>
+    </div>
 
-                    <section id="experience" className="py-32 px-6">
-                        <div className="max-w-4xl mx-auto">
-                            <h2 className="text-4xl font-[900] text-white tracking-tighter mb-24 flex items-center gap-6 blue-glow uppercase">
-                                <span className="w-12 h-[2px] bg-blue-600"></span> Career Architecture
-                            </h2>
-                            <div className="space-y-24">
-                                {experience.map((exp, idx) => (
-                                    <div key={idx} className="relative pl-12 border-l-2 border-slate-800">
-                                        <div className="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-slate-950 border-4 border-blue-600 shadow-[0_0_15px_rgba(37,99,235,0.4)]" />
-                                        <div className="mb-6">
-                                            <span className="inline-block px-4 py-1.5 mb-4 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-[0.2em]">
-                                                {exp.period}
-                                            </span>
-                                            <h4 className="text-3xl font-extrabold text-white tracking-tight mb-2 uppercase leading-none">{exp.role}</h4>
-                                            <p className="text-lg font-bold pink-accent uppercase tracking-widest">{exp.company}</p>
-                                        </div>
-                                        <p className="text-lg text-slate-400 leading-relaxed font-medium italic">{exp.description}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
+    <div class="exp-item reveal reveal-delay-2">
+      <div class="exp-divider"></div>
+      <div class="exp-year">Dec 2022 – June 2023</div>
+      <h3 class="exp-role">Systems Research<br>Analyst</h3>
+      <div class="exp-company">Entegra Sources / Mayahold</div>
+      <p class="exp-desc">Led simulation-driven research for embedded system architectures using Python and MATLAB. Focused on real-time reliability validation and edge-case failure identification across sensor networks.</p>
+    </div>
 
-                    <section id="education" className="py-32 px-6 bg-slate-900/10 border-t border-white/5">
-                        <div className="max-w-4xl mx-auto">
-                            <h2 className="text-4xl font-[900] text-white tracking-tighter mb-24 flex items-center gap-6 blue-glow uppercase">
-                                <span className="w-12 h-[2px] bg-pink-500"></span> Academic Path
-                            </h2>
-                            <div className="space-y-24">
-                                {education.map((edu, idx) => (
-                                    <div key={idx} className="relative pl-12 border-l-2 border-slate-800">
-                                        <div className="absolute -left-[11px] top-0 w-5 h-5 rounded-full bg-slate-950 border-4 border-pink-500 shadow-[0_0_15px_rgba(236,72,153,0.4)]" />
-                                        <div className="mb-6">
-                                            <span className="inline-block px-4 py-1.5 mb-4 rounded-lg bg-pink-500/10 border border-pink-500/20 text-pink-400 text-[10px] font-black uppercase tracking-[0.2em]">
-                                                {edu.period}
-                                            </span>
-                                            <h4 className="text-3xl font-extrabold text-white tracking-tight mb-2 uppercase leading-none">{edu.degree}</h4>
-                                            <p className="text-lg font-bold text-blue-300 uppercase tracking-widest">{edu.institution}</p>
-                                        </div>
-                                        <p className="text-lg text-slate-400 leading-relaxed font-medium italic">{edu.description}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
+  </div>
+</section>
 
-                    <section id="projects" className="py-32 px-6 bg-slate-900/10 border-t border-white/5">
-                        <div className="max-w-7xl mx-auto">
-                            <div className="text-center mb-24">
-                                <h2 className="text-[11px] font-black text-pink-200 uppercase tracking-[0.6em] mb-4">Applied Logic</h2>
-                                <h3 className="text-5xl font-[900] text-white tracking-tighter blue-glow uppercase">Technical Portfolio</h3>
-                            </div>
-                            <div className="grid md:grid-cols-2 gap-12">
-                                {projects.map((proj, idx) => (
-                                    <div key={idx} className="group glass-card rounded-[3rem] flex flex-col">
-                                        <div className="h-64 overflow-hidden relative">
-                                            <img src={proj.img} alt={proj.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
-                                            <div className="absolute bottom-6 left-12 w-14 h-14 rounded-2xl bg-slate-900 flex items-center justify-center text-blue-400 border border-white/10 group-hover:rotate-12 transition-transform">
-                                                <Icon name={proj.icon} />
-                                            </div>
-                                        </div>
-                                        <div className="p-12 pt-6">
-                                            <h4 className="text-3xl font-black text-white mb-6 tracking-tighter uppercase leading-none">{proj.title}</h4>
-                                            <p className="text-slate-400 leading-relaxed mb-10 flex-grow font-medium italic">{proj.description}</p>
-                                            <div className="flex flex-wrap gap-3 mb-10">
-                                                {proj.tags.map((tag, i) => (
-                                                    <span key={i} className="px-4 py-1.5 rounded-lg bg-blue-500/5 text-blue-300 text-[10px] font-black uppercase tracking-widest border border-white/5">
-                                                        {tag}
-                                                    </span>
-                                                ))}
-                                            </div>
-                                            <div className="flex justify-between items-center pt-4 border-t border-white/10">
-                                                <a href={proj.githubUrl} target="_blank" className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.4em] text-white hover:text-blue-400 transition-colors group/link">
-                                                    <Icon name="github" className="w-4 h-4" />
-                                                    View Source <Icon name="arrow-up-right" className="w-3 h-3 group-hover/link:translate-x-1 transition-transform" />
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
+<!-- Education -->
+<section id="education">
+  <div>
+    <div class="section-label reveal">03 — Academic</div>
+    <h2 class="skills-title reveal reveal-delay-1" style="font-family:'Cormorant Garamond',serif;font-size:clamp(3rem,5vw,5rem);font-weight:300;line-height:1;color:var(--ink)">How I <em style="font-style:italic;color:var(--rose-deep)">Learned</em></h2>
+  </div>
+  <div class="edu-grid" style="margin-top:60px">
 
-                    <section className="py-40 px-6">
-                        <div className="max-w-6xl mx-auto bg-slate-950 rounded-[4rem] p-20 text-center text-white relative overflow-hidden border border-white/5 shadow-2xl">
-                            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[150px]" />
-                            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-pink-500/5 rounded-full blur-[150px]" />
-                            <h2 className="text-6xl font-[900] mb-10 tracking-tighter uppercase leading-none hero-gradient">
-                                Strategic Alpha. <br /> Engineered.
-                            </h2>
-                            <p className="text-slate-400 mb-16 text-2xl max-w-3xl mx-auto font-light leading-relaxed italic">
-                                Currently evaluating <span className="text-white font-bold">Analytics Engineering</span> and <span className="pink-accent font-bold uppercase tracking-widest">AI Research</span> opportunities.
-                            </p>
-                            <div className="flex flex-col md:flex-row justify-center items-center gap-8 relative">
-                                <a href="mailto:asmibas18@gmail.com" className="w-full md:w-auto px-12 py-6 bg-blue-600 text-white rounded-2xl font-black hover:scale-105 transition-all uppercase tracking-widest text-[11px] flex items-center justify-center gap-4 shadow-2xl hover:bg-pink-600">
-                                    <Icon name="mail" className="w-5 h-5" /> Start Discussion
-                                </a>
-                                <div className="flex gap-6">
-                                    <a href="https://linkedin.com/in/asmibasnet/" target="_blank" className="p-6 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 hover:text-blue-400 transition-colors">
-                                        <Icon name="linkedin" className="w-6 h-6" />
-                                    </a>
-                                    <a href="https://github.com/AsmiBasnet" target="_blank" className="p-6 bg-slate-900 rounded-2xl border border-slate-800 text-slate-400 hover:text-pink-200 transition-colors">
-                                        <Icon name="github" className="w-6 h-6" />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+    <div class="edu-card reveal reveal-delay-1">
+      <div class="edu-period">Expected May 2026</div>
+      <h3 class="edu-degree">Masters in<br>Analytics</h3>
+      <div class="edu-inst">Saint Louis University</div>
+      <p class="edu-desc">Bayesian Modeling · Data Communication · Machine Learning · Data Visualization · Statistical Programming</p>
+    </div>
 
-                    <footer className="py-20 border-t border-white/5 text-center relative overflow-hidden">
-                        <div className="max-w-7xl mx-auto px-6 relative z-10">
-                            <p className="text-blue-500/60 font-black text-[10px] uppercase tracking-[0.5em] mb-6">High-Entropy Architecture • STL, MO</p>
-                            <div className="flex items-center justify-center gap-4 text-[10px] font-black uppercase text-slate-600 tracking-[0.2em]">
-                                <Icon name="cpu" className="w-4 h-4" />
-                                <span>© 2026 ASMI BASNET</span>
-                            </div>
-                        </div>
-                    </footer>
-                </div>
-            );
-        };
+    <div class="edu-card reveal reveal-delay-2">
+      <div class="edu-period">2017 – 2023</div>
+      <h3 class="edu-degree">B.E. Electronics &<br>Communications</h3>
+      <div class="edu-inst">Tribhuvan University</div>
+      <p class="edu-desc">Final-Year Project: Designed and implemented a sensor-based smart monitoring system using microcontrollers and embedded C/C++.</p>
+    </div>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="projects-header">
+    <div>
+      <div class="section-label reveal">04 — Portfolio</div>
+      <h2 class="projects-title reveal reveal-delay-1">Things I've<br><em>Built</em></h2>
+    </div>
+  </div>
+  <div class="proj-grid">
+
+    <div class="proj-card reveal">
+      <div class="proj-img-wrap">
+        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800" alt="CareGap" loading="lazy" />
+        <div class="proj-img-overlay"></div>
+        <div class="proj-img-num">01 / 04</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-tags">
+          <span class="proj-tag">Django</span><span class="proj-tag">RAG</span><span class="proj-tag">FAISS</span><span class="proj-tag">Ollama</span>
+        </div>
+        <h3 class="proj-title">CareGap Analytics — Patient Risk</h3>
+        <p class="proj-desc">Patient risk management system using Django, integrating a RAG pipeline powered by FAISS and a local LLaMA model for clinical decision support.</p>
+        <a href="https://github.com/AsmiBasnet/caregap" target="_blank" class="proj-link">
+          View Source
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="proj-card reveal reveal-delay-1">
+      <div class="proj-img-wrap">
+        <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?auto=format&fit=crop&q=80&w=800" alt="E-commerce" loading="lazy" />
+        <div class="proj-img-overlay"></div>
+        <div class="proj-img-num">02 / 04</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-tags">
+          <span class="proj-tag">PostgreSQL</span><span class="proj-tag">Cohort Analysis</span><span class="proj-tag">ETL</span>
+        </div>
+        <h3 class="proj-title">E-Commerce Analytics SQL</h3>
+        <p class="proj-desc">High-performance SQL scripts for comprehensive e-commerce telemetry — customer lifecycle, cohort analysis, and revenue attribution modeling.</p>
+        <a href="https://github.com/AsmiBasnet/ecommerce-analytics-sql" target="_blank" class="proj-link">
+          View Source
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="proj-card reveal reveal-delay-1">
+      <div class="proj-img-wrap">
+        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" alt="Agentic RAG" loading="lazy" />
+        <div class="proj-img-overlay"></div>
+        <div class="proj-img-num">03 / 04</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-tags">
+          <span class="proj-tag">GPT-4o</span><span class="proj-tag">Agno</span><span class="proj-tag">Vector RAG</span>
+        </div>
+        <h3 class="proj-title">Agentic RAG Orchestration</h3>
+        <p class="proj-desc">Multi-agent autonomous system using GPT-4o and the Agno framework for real-time market data synthesis and intelligent retrieval.</p>
+        <a href="https://github.com/AsmiBasnet/agentic-rag" target="_blank" class="proj-link">
+          View Source
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="proj-card reveal reveal-delay-2">
+      <div class="proj-img-wrap">
+        <img src="https://images.unsplash.com/photo-1614680376593-902f74cf0d41?auto=format&fit=crop&q=80&w=800" alt="Spotify" loading="lazy" />
+        <div class="proj-img-overlay"></div>
+        <div class="proj-img-num">04 / 04</div>
+      </div>
+      <div class="proj-body">
+        <div class="proj-tags">
+          <span class="proj-tag">SQL</span><span class="proj-tag">Python</span><span class="proj-tag">Seaborn</span>
+        </div>
+        <h3 class="proj-title">Spotify Music Trend Analysis</h3>
+        <p class="proj-desc">Large-scale Spotify dataset analysis using SQL and Python to surface genre trends, duration patterns, and audio feature correlations.</p>
+        <a href="https://github.com/AsmiBasnet" target="_blank" class="proj-link">
+          View Source
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="contact-bg-rose"></div>
+  <div class="contact-eyebrow reveal">Currently Available — Analytics Engineering & AI Research</div>
+  <h2 class="contact-title reveal reveal-delay-1">Let's Build<br><em>Something</em></h2>
+  <p class="contact-sub reveal reveal-delay-2">I'm looking for roles where sharp thinking, data systems, and real-world impact overlap. If that sounds like your team — let's talk.</p>
+  <div class="contact-actions reveal reveal-delay-2">
+    <a href="mailto:asmibas18@gmail.com" class="btn-primary" style="font-size:11px">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      asmibas18@gmail.com
+    </a>
+    <a href="https://linkedin.com/in/asmibasnet/" target="_blank" class="icon-btn" title="LinkedIn">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    </a>
+    <a href="https://github.com/AsmiBasnet" target="_blank" class="icon-btn" title="GitHub">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <a href="#hero" class="footer-logo">Asmi Basnet</a>
+  <span class="footer-mono">© 2026 — All rights reserved</span>
+  <span class="footer-mono">STL, Missouri</span>
+</footer>
+
+<script>
+// Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+(function animRing(){
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx+'px';
+  ring.style.top = ry+'px';
+  requestAnimationFrame(animRing);
+})();
+
+// Rotating roles
+const roles = document.querySelectorAll('.role');
+let current = 0;
+setInterval(() => {
+  roles[current].classList.remove('active');
+  roles[current].classList.add('exit');
+  const prev = current;
+  current = (current + 1) % roles.length;
+  roles[current].style.transform = 'translateY(100%)';
+  roles[current].style.opacity = '0';
+  roles[current].classList.add('active');
+  setTimeout(() => {
+    roles[current].style.transform = '';
+    roles[current].style.opacity = '';
+  }, 20);
+  setTimeout(() => roles[prev].classList.remove('exit'), 600);
+}, 2200);
+
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+</script>
 </body>
-
 </html>

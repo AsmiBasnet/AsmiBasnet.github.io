@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asmi Basnet | Data Analyst, Analytics Engineer & AI Specialist</title>
+    <meta name="description" content="Portfolio of Asmi Basnet — Master of Science in Analytics. Expert in SQL, Data Warehousing (SCD Type-2), Healthcare Analytics, Machine Learning, and GenAI RAG Systems.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            950: '#082f49',
+                        },
+                        accent: {
+                            pink: '#ec4899',
+                            purple: '#8b5cf6',
+                            cyan: '#06b6d4',
+                            emerald: '#10b981',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        glow: {
+                            '0%': { opacity: '0.4', filter: 'drop-shadow(0 0 15px rgba(56, 189, 248, 0.4))' },
+                            '100%': { opacity: '0.8', filter: 'drop-shadow(0 0 30px rgba(236, 72, 153, 0.6))' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- React, ReactDOM, Babel -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #030712;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* Ambient glowing background */
+        .bg-gradient-mesh {
+            background-image: 
+                radial-gradient(at 10% 15%, rgba(14, 165, 233, 0.12) 0px, transparent 50%),
+                radial-gradient(at 90% 10%, rgba(236, 72, 153, 0.10) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+                radial-gradient(at 80% 85%, rgba(6, 182, 212, 0.12) 0px, transparent 50%),
+                radial-gradient(at 20% 85%, rgba(168, 85, 247, 0.10) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Glassmorphism surfaces */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(56, 189, 248, 0.35);
+            background: rgba(15, 23, 42, 0.75);
+            box-shadow: 0 20px 40px -15px rgba(14, 165, 233, 0.25);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #bae6fd 45%, #f472b6 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-accent-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-ring {
+            padding: 3px;
+            background: linear-gradient(135deg, #0284c7, #ec4899, #8b5cf6);
+            border-radius: 9999px;
+            box-shadow: 0 0 35px rgba(14, 165, 233, 0.35);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+
+        /* Code highlight */
+        .code-snippet {
+            font-family: 'JetBrains Mono', monospace;
+            background: #0a0f1d;
+            border: 1px solid rgba(56, 189, 248, 0.15);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-mesh text-slate-100 antialiased selection:bg-brand-500/30 selection:text-white">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo } = React;
+
+        // Dynamic Lucide Icon Wrapper
+        const Icon = ({ name, className = "w-5 h-5" }) => {
+            useEffect(() => {
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            }, [name]);
+            return <i data-lucide={name} className={className}></i>;
+        };
+
+        // Main App Component
+        const App = () => {
+            const [scrolled, setScrolled] = useState(false);
+            const [activeSection, setActiveSection] = useState('home');
+            const [activeRoleIndex, setActiveRoleIndex] = useState(0);
+            const [projectFilter, setProjectFilter] = useState('all');
+            const [selectedProject, setSelectedProject] = useState(null);
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+            const [copiedEmail, setCopiedEmail] = useState(false);
+            const [activeCodeTab, setActiveCodeTab] = useState('sql');
+
+            // Scroll listener
+            useEffect(() => {
+                const handleScroll = () => {
+                    setScrolled(window.scrollY > 30);
+                    
+                    const sections = ['home', 'metrics', 'roles', 'skills', 'experience', 'projects', 'architecture', 'education', 'contact'];
+                    const scrollPos = window.scrollY + 200;
+                    
+                    for (const s of sections) {
+                        const el = document.getElementById(s);
+                        if (el) {
+                            const top = el.offsetTop;
+                            const height = el.offsetHeight;
+                            if (scrollPos >= top && scrollPos < top + height) {
+                                setActiveSection(s);
+                                break;
+                            }
+                        }
+                    }
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            // Copy Email Handler
+            const copyEmail = () => {
+                navigator.clipboard.writeText('asmibas18@gmail.com');
+                setCopiedEmail(true);
+                setTimeout(() => setCopiedEmail(false), 2500);
+            };
+
+            // Targeted Roles (From Master Base Resume)
+            const roleProfiles = [
+                {
+                    id: "bi-data-analyst",
+                    title: "Data Analyst / BI Specialist",
+                    tag: "Analytics & BI",
+                    icon: "bar-chart-3",
+                    badge: "Snowflake • DuckDB • Power BI • Star Schema",
+                    summary: "Results-driven Data Analyst & BI Specialist designing end-to-end analytics pipelines, dimensional star schemas, and executive dashboards. Expert in high-performance SQL (CTEs, window functions, query plan optimization), Python, Power BI (DAX, Power Query ETL), and cohort/retention analysis.",
+                    highlights: [
+                        "Architected 6 executive Power BI & Tableau dashboards tracking 15+ KPIs for university leadership",
+                        "Refactored complex institutional SQL queries, cutting extraction runtime and reporting latency by 40%",
+                        "Built RFM segmentation & cohort retention models identifying champion segments driving 60% of revenue"
+                    ]
+                },
+                {
+                    id: "healthcare-analyst",
+                    title: "Healthcare Analytics & Clinical Informatics",
+                    tag: "Clinical Data",
+                    icon: "activity",
+                    badge: "DuckDB • EHR Synthea • Clinical Risk • HIPAA",
+                    summary: "Specialist in clinical outcomes, electronic health records (EHR/Synthea), and population health metrics. Experienced in architecting clinical risk scoring engines, quality measure gap detection algorithms, and automated data validation across 34,000+ patient records.",
+                    highlights: [
+                        "Engineered high-throughput DuckDB pipeline processing 34,000+ Synthea EHR records with sub-second queries",
+                        "Built 3-model ensemble ML risk classifier (Lasso, Random Forest, XGBoost) for chronic diabetes & hypertension",
+                        "Integrated Explainable AI (SHAP TreeExplainer) & What-If counterfactual vital simulation for case managers"
+                    ]
+                },
+                {
+                    id: "ai-ml-engineer",
+                    title: "AI / ML Engineer & GenAI Specialist",
+                    tag: "Machine Learning & GenAI",
+                    icon: "cpu",
+                    badge: "PyTorch • FAISS • Ollama • Prophet+LSTM • Agno",
+                    summary: "Machine Learning Engineer developing production-grade predictive models, hybrid time-series forecasting, and Retrieval-Augmented Generation (RAG) systems. Skilled in PyTorch, Scikit-Learn, vector databases (FAISS, ChromaDB), and local/cloud LLM orchestration.",
+                    highlights: [
+                        "Architected hybrid Prophet + LSTM neural network with anomaly detection for institutional forecasting",
+                        "Built multi-agent autonomous market intelligence system with Agno & GPT-4o, reducing research time by 90%",
+                        "Trained deep CNN vision classifier across 33,000+ chest radiographs for COVID & pulmonary condition detection"
+                    ]
+                },
+                {
+                    id: "systems-analyst",
+                    title: "Business Systems & Data Operations Analyst",
+                    tag: "Data Ops & Governance",
+                    icon: "shield-check",
+                    badge: "Process Mapping • DQA • Agile • SCD Type-2",
+                    summary: "Business Systems Analyst experienced in requirements engineering, cross-functional stakeholder translation, data quality assurance (DQA), and enterprise data warehousing with Slowly Changing Dimensions (SCD Type-2) and automated audit logging.",
+                    highlights: [
+                        "Designed SCD Type-2 enterprise workforce warehouse maintaining complete historical audits across 10,000+ records",
+                        "Engineered automated financial ETL and reconciliation pipelines in Power Query & Excel, eliminating manual errors",
+                        "Standardized organizational data dictionaries, FERPA/HIPAA governance policies, and agile user stories"
+                    ]
+                }
+            ];
+
+            // Master Projects Catalog (Synced with GitHub and Master Resume)
+            const projects = [
+                {
+                    id: "caregap",
+                    title: "CareGap — Clinical Decision Support & Population Health",
+                    category: "healthcare",
+                    badge: "Healthcare & ML",
+                    description: "Full-stack healthcare analytics platform querying 34,000+ Synthea EHR records via DuckDB for sub-second analytical aggregations. Features a 3-model ML risk ensemble (Lasso, Random Forest, XGBoost), real-time SHAP Explainable AI, interactive 'What-If' clinical simulation, CDC growth charts, and a multi-tier FAISS RAG clinical assistant.",
+                    metrics: "34,000+ Patient Records | Sub-second DuckDB Aggregation | SHAP Explainability",
+                    tags: ["Python", "DuckDB", "Scikit-Learn", "XGBoost", "SHAP", "FAISS", "Ollama", "Streamlit", "Docker"],
+                    icon: "heart-pulse",
+                    img: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800",
+                    github: "https://github.com/AsmiBasnet/CAREGAP_APP",
+                    featured: true,
+                    bullets: [
+                        "Engineered columnar DuckDB backend querying 34,000+ patient records for instant clinical analytics",
+                        "Trained ensemble ML risk classifier with Lasso L1 feature selection, Random Forest, and XGBoost",
+                        "Implemented SHAP TreeExplainer and interactive counterfactual simulation allowing clinicians to test vital adjustments",
+                        "Integrated CDC Growth Chart Z-score/CDF formulas for pediatric cohorts (<18y) and prompt safety guardrails"
+                    ]
+                },
+                {
+                    id: "scd-warehouse",
+                    title: "SCD Type-2 Workforce Data Warehouse & Analytics",
+                    category: "engineering",
+                    badge: "Data Engineering & SQL",
+                    description: "Enterprise workforce data warehouse implementing Slowly Changing Dimensions (SCD Type 2) with surrogate keys, effective/end timestamps, and is_current flags across 10,000+ employee records. Features modular SQL window transforms for retention and an NLP exit survey sentiment engine.",
+                    metrics: "10,000+ Employee Records | SCD Type-2 Audit Trail | NLP Exit Intelligence",
+                    tags: ["SQL CTEs", "Window Functions", "Python", "DuckDB", "Streamlit", "NLP Sentiment", "Data Modeling"],
+                    icon: "database",
+                    img: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800",
+                    github: "https://github.com/AsmiBasnet/scd",
+                    featured: true,
+                    bullets: [
+                        "Architected 3NF to Dimensional schema with SCD Type-2 tracking promotions, salary bumps, and department shifts",
+                        "Authored modular SQL using LAG, LEAD, and DENSE_RANK to calculate rolling 12-month attrition and velocity",
+                        "Built automated NLP pipeline analyzing unstructured exit remarks to quantify turnover root causes",
+                        "Created interactive Streamlit sandbox with live scenario simulation and embedded SQL execution"
+                    ]
+                },
+                {
+                    id: "ecommerce-sql",
+                    title: "Enterprise E-Commerce Sales & Customer Behavior Analytics",
+                    category: "engineering",
+                    badge: "Advanced SQL & BI",
+                    description: "Relational schema design (3NF normalized 5-table schema) modeling 8,000+ transactional records. Features 12 production-grade SQL queries with nested CTEs and window functions, RFM customer segmentation, and 3-month cohort retention analysis.",
+                    metrics: "8,000+ Records | 12 Advanced SQL Models | 60% Revenue Champion Cohort",
+                    tags: ["PostgreSQL", "DuckDB", "SQL CTEs", "Window Functions", "RFM Segmentation", "Python", "Seaborn"],
+                    icon: "shopping-bag",
+                    img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800",
+                    github: "https://github.com/AsmiBasnet/ecommerce-analytics-sql",
+                    featured: true,
+                    bullets: [
+                        "Designed 5-table normalized schema (Customers, Products, Categories, Orders, Order Items)",
+                        "Performed Recency, Frequency, and Monetary (RFM) segmentation, proving top 30% customers drive 60% revenue",
+                        "Quantified monthly acquisition cohort retention (65% 3-month benchmark) and 40%+ co-purchase affinity pairs",
+                        "Authored parameterized SQL scripts for automated weekly executive revenue reporting"
+                    ]
+                },
+                {
+                    id: "retail-forecasting",
+                    title: "AI-Powered Retail Sales Forecasting & Anomaly Detection",
+                    category: "ai-ml",
+                    badge: "Time-Series & Deep Learning",
+                    description: "Robust end-to-end intelligent forecasting system combining Facebook Prophet (trend & multi-seasonality) and deep PyTorch LSTM neural networks with automated statistical anomaly detection and GenAI business summary generation.",
+                    metrics: "Hybrid Prophet+LSTM | Statistical Anomaly Engine | GenAI Executive Briefs",
+                    tags: ["Python", "Facebook Prophet", "PyTorch LSTM", "Scikit-Learn", "Streamlit", "GenAI API"],
+                    icon: "trending-up",
+                    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800",
+                    github: "https://github.com/AsmiBasnet/-AI-based-retail-Sales-Forecasting-Anomaly-Detection-System",
+                    featured: true,
+                    bullets: [
+                        "Engineered hybrid forecasting architecture combining Prophet decomposing trends and LSTM capturing residual non-linearities",
+                        "Built real-time statistical anomaly detection flagging inventory spikes and supply disruptions",
+                        "Deployed interactive Streamlit UI allowing category drilldowns, forecast horizon tuning, and LLM report synthesis"
+                    ]
+                },
+                {
+                    id: "agentic-rag",
+                    title: "Autonomous Agentic RAG & Multi-Agent Market Research",
+                    category: "ai-ml",
+                    badge: "Agentic AI & GenAI",
+                    description: "Autonomous multi-agent intelligence system coordinating specialized agents (Market Scout & Financial Analyst) using the Agno framework and OpenAI GPT-4o API to extract, summarize, and synthesize real-time market news and telemetry.",
+                    metrics: "90% Manual Research Time Saved | Zapier Webhooks | Multi-Agent Coordination",
+                    tags: ["Python", "Agno Framework", "OpenAI GPT-4o", "Vector RAG", "Zapier", "REST APIs"],
+                    icon: "bot",
+                    img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
+                    github: "https://github.com/AsmiBasnet",
+                    featured: false,
+                    bullets: [
+                        "Architected agentic consensus workflow delegating web discovery, quantitative analysis, and synthesis",
+                        "Integrated Zapier webhook triggers for real-time alert triage and automatic executive briefing drafts",
+                        "Reduced manual market trend synthesis and news reconciliation time by 90%"
+                    ]
+                },
+                {
+                    id: "price-gouging",
+                    title: "Price Gouging & Fraud Detection System (NYS OAG Standards)",
+                    category: "engineering",
+                    badge: "Legal Compliance & Data",
+                    description: "Legally-grounded fraud and price spike detection model using New York State General Business Law 396-r standards to audit transactional feeds, detect anomalous retail markups during emergency declarations, and generate audit-ready evidence.",
+                    metrics: "NY GBL 396-r Thresholds | Statistical Outlier Detection | Regulatory Audit Reports",
+                    tags: ["Python", "Pandas", "Statistical Outliers", "Legal Analytics", "Streamlit"],
+                    icon: "scale",
+                    img: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&q=80&w=800",
+                    github: "https://github.com/AsmiBasnet/rice-Gouging-Fraud-Detection-Project",
+                    featured: false,
+                    bullets: [
+                        "Translated NY General Business Law 396-r statutory thresholds into algorithmic outlier rules",
+                        "Engineered automated baseline pricing comparison and percentage surge flag metrics",
+                        "Exported compliance dossiers with statistical confidence intervals for regulatory reviewers"
+                    ]
+                },
+                {
+                    id: "compliance-go",
+                    title: "Compliance Data Quality & Automated Excel Engine in Go",
+                    category: "engineering",
+                    badge: "High-Performance Systems",
+                    description: "High-performance data validation tool written in Go (Golang) using Excelize to audit millions of rows, perform constraint validation, and generate stylized multi-tab compliance workbooks.",
+                    metrics: "Compiled Go Binary | High-Throughput Validation | Automated Excel Reporting",
+                    tags: ["Go (Golang)", "Excelize", "Data Quality", "Validation Engine", "CLI Tool"],
+                    icon: "file-spreadsheet",
+                    img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=800",
+                    github: "https://github.com/AsmiBasnet/Compliance-Data-Quality---Excel-Report-Generator-in-Go",
+                    featured: false,
+                    bullets: [
+                        "Engineered zero-dependency high-speed data validation tool in Go for healthcare and financial records",
+                        "Enforced mandatory schema constraints, foreign key referential integrity, and regex validation",
+                        "Automatically rendered executive-formatted Excel workbooks with conditional formatting and KPI summaries"
+                    ]
+                },
+                {
+                    id: "webmcp",
+                    title: "WebMCP — Disaster & Emergency Management Command Center",
+                    category: "bi",
+                    badge: "Geospatial & Real-Time APIs",
+                    description: "Real-time command center dashboard integrating satellite hazard feeds from Copernicus Emergency Management Service (EMSR), Global Disaster Alert and Coordination System (GDACS), live highway closures, and river sensor data.",
+                    metrics: "Satellite Sensor Ingestion | Live Geospatial Mapping | Copernicus EMSR & GDACS",
+                    tags: ["JavaScript", "TypeScript", "REST APIs", "Geospatial Data", "Command Center UI"],
+                    icon: "globe",
+                    img: "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800",
+                    github: "https://github.com/AsmiBasnet/webMCP",
+                    featured: false,
+                    bullets: [
+                        "Streamed real-time natural hazard satellite feeds and European Copernicus geospatial telemetry",
+                        "Consolidated multi-agency emergency alerts into a unified high-priority tactical map",
+                        "Designed responsive emergency operations UI for rapid incident commander decision-making"
+                    ]
+                },
+                {
+                    id: "zombie-detector",
+                    title: "Zombie Subscription & Recurring Fee Detector",
+                    category: "bi",
+                    badge: "Financial Analytics & ML",
+                    description: "End-to-end data analytics system designed to detect recurring billing subscriptions from raw transactional bank logs and identify 'zombie' (forgotten or stealth price-creeping) subscriptions.",
+                    metrics: "Transaction Pattern Detection | Price Drift Alerts | Recurring Cycle Analysis",
+                    tags: ["Python", "Pandas", "Pattern Recognition", "Anomaly Detection", "Jupyter"],
+                    icon: "credit-card",
+                    img: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=800",
+                    github: "https://github.com/AsmiBasnet/AsmiBasnet-zombie-subscription-detector",
+                    featured: false,
+                    bullets: [
+                        "Parsed raw unstructured bank statement descriptions using fuzzy matching and regex tokenizers",
+                        "Calculated payment periodicity and detected stealth pricing escalations across subscription cycles",
+                        "Visualized annual leakages and potential cost savings in interactive diagnostic dashboards"
+                    ]
+                },
+                {
+                    id: "cnn-vision",
+                    title: "Pulmonary Radiograph Classification via Deep CNNs & ResNet",
+                    category: "ai-ml",
+                    badge: "Computer Vision & Deep Learning",
+                    description: "Multi-class deep convolutional neural network (CNN) trained on 33,000+ chest radiographs (COVID-QU-Ex dataset) and CIFAR-10, benchmarking custom multi-layer CNNs against pre-trained ResNet backbones.",
+                    metrics: "33,000+ Radiographs | ResNet Transfer Learning | Data Augmentation",
+                    tags: ["Python", "PyTorch", "Torchvision", "CNN Architectures", "ResNet", "Matplotlib"],
+                    icon: "scan",
+                    img: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=800",
+                    github: "https://github.com/AsmiBasnet/-From-MLP-to-CNN-Improving-CIFAR-10-Image-Classification-with-Deep-Learning",
+                    featured: false,
+                    bullets: [
+                        "Built multi-layer convolutional networks with Dropout, BatchNorm, and adaptive learning rate schedulers",
+                        "Classified COVID-19, viral pneumonia, and normal scans across 33,000+ medical radiographs",
+                        "Evaluated performance using confusion matrices, ROC-AUC curves, and Grad-CAM activation maps"
+                    ]
+                }
+            ];
+
+            // Filtered Projects
+            const filteredProjects = useMemo(() => {
+                if (projectFilter === 'all') return projects;
+                if (projectFilter === 'featured') return projects.filter(p => p.featured);
+                return projects.filter(p => p.category === projectFilter);
+            }, [projectFilter]);
+
+            // Technical Skills Inventory (From Master Resume)
+            const skillCategories = [
+                {
+                    title: "SQL & Databases",
+                    icon: "database",
+                    color: "from-sky-500/20 to-blue-600/20 text-sky-400 border-sky-500/30",
+                    skills: [
+                        "Advanced SQL", "Snowflake", "DuckDB", "PostgreSQL", "MySQL", 
+                        "SQLite", "MS SQL Server", "Common Table Expressions (CTEs)", 
+                        "Window Functions (LAG/LEAD, RANK, NTILE)", "Indexing & Execution Plans", 
+                        "Stored Procedures & Views"
+                    ]
+                },
+                {
+                    title: "Data Warehousing & Modeling",
+                    icon: "layers",
+                    color: "from-indigo-500/20 to-purple-600/20 text-indigo-400 border-indigo-500/30",
+                    skills: [
+                        "Slowly Changing Dimensions (SCD Type-2)", "Star & Snowflake Schema", 
+                        "Fact & Dimension Design", "3NF Normalization", "Surrogate Keys & Lineage", 
+                        "ER Diagrams", "Relational Integrity Constraints", "Audit Trails"
+                    ]
+                },
+                {
+                    title: "BI & Data Visualization",
+                    icon: "bar-chart-2",
+                    color: "from-pink-500/20 to-rose-600/20 text-pink-400 border-pink-500/30",
+                    skills: [
+                        "Power BI (Advanced DAX, Calculated Measures)", "Power Query M Language", 
+                        "Tableau Dashboards", "Streamlit Applications", "Excel Power Pivot & Dynamic Arrays", 
+                        "Executive KPI Storytelling", "Row-Level Security (RLS)"
+                    ]
+                },
+                {
+                    title: "Programming & Data Science",
+                    icon: "code",
+                    color: "from-emerald-500/20 to-teal-600/20 text-emerald-400 border-emerald-500/30",
+                    skills: [
+                        "Python (Pandas, NumPy, Scikit-Learn)", "PyTorch & Deep Learning", 
+                        "R (tidyverse, ggplot2, RMarkdown)", "Go (Golang)", "C / C++", 
+                        "MATLAB", "FastAPI & Flask", "Docker & Docker Compose"
+                    ]
+                },
+                {
+                    title: "AI, GenAI & Predictive Modeling",
+                    icon: "sparkles",
+                    color: "from-amber-500/20 to-orange-600/20 text-amber-400 border-amber-500/30",
+                    skills: [
+                        "RAG Architectures (FAISS, ChromaDB)", "Local LLMs (Ollama: Llama3, Phi-3, Qwen)", 
+                        "Cloud APIs (GPT-4o, Gemini Flash)", "Multi-Agent Frameworks (Agno)", 
+                        "Explainable AI (SHAP TreeExplainer)", "Prophet + LSTM Hybrid Forecasting", 
+                        "Ensemble ML (XGBoost, LightGBM, Random Forest)"
+                    ]
+                },
+                {
+                    title: "Governance, Governance & Statistics",
+                    icon: "shield",
+                    color: "from-cyan-500/20 to-blue-600/20 text-cyan-400 border-cyan-500/30",
+                    skills: [
+                        "Automated Data Quality Assurance (DQA)", "Data Reconciliation Rules", 
+                        "HIPAA & FERPA Awareness", "Hypothesis & A/B Testing", "ANOVA & Chi-Square Tests", 
+                        "OLS & Logistic Regression", "SPSS Modeling", "Agile/Scrum Workflows"
+                    ]
+                }
+            ];
+
+            // Career Experience (From Master Resume)
+            const experience = [
+                {
+                    role: "Business Analyst / Research Assistant (SPS-Corps)",
+                    company: "Saint Louis University",
+                    location: "St. Louis, MO",
+                    period: "August 2025 – Present",
+                    current: true,
+                    description: "Lead analytical workflows, financial ETL automation, predictive modeling, and conversational AI assistants for university operations.",
+                    bullets: [
+                        "Engineered automated financial ETL pipelines in Power Query & Excel, eliminating manual data entry cycles and accelerating weekly budget reporting.",
+                        "Evaluated student retention bottlenecks across academic departments by building statistical regression models and cohort analyses in Python & R.",
+                        "Developed AI-driven hybrid time-series forecasting architecture combining Prophet and LSTM neural networks with anomaly detection.",
+                        "Built enterprise GenAI RAG chatbot using local Ollama LLMs and OpenAI APIs to enable plain-English querying of institutional databases.",
+                        "Optimized complex SQL queries across 8+ operational tables, refactoring nested subqueries into modular CTEs to improve execution speeds."
+                    ]
+                },
+                {
+                    role: "Data Analyst Intern",
+                    company: "Saint Louis University",
+                    location: "St. Louis, MO",
+                    period: "June 2024 – August 2024",
+                    current: false,
+                    description: "Built executive BI dashboards, optimized data pipelines, and enforced data privacy standards for university leadership.",
+                    bullets: [
+                        "Architected, built, and deployed 6 interactive Power BI and Tableau dashboards backed by star-schema models to track 15+ operational KPIs.",
+                        "Performed end-to-end exploratory data analysis in Python & Excel across multi-year registration files, resolving cross-system anomalies.",
+                        "Tuned high-performance SQL queries using window functions (ROW_NUMBER, RANK) and CTEs, cutting reporting latency by 40%.",
+                        "Implemented automated data validation checks ensuring strict compliance with FERPA student privacy regulations."
+                    ]
+                },
+                {
+                    role: "Data Analyst / Systems Research Analyst",
+                    company: "Entegra Sources Pvt. Ltd. (Mayahold Group)",
+                    location: "Remote / Kathmandu",
+                    period: "December 2022 – July 2023",
+                    current: false,
+                    description: "Conducted statistical market research on large-scale survey datasets and performed firmware/embedded system reliability simulations.",
+                    bullets: [
+                        "Extracted, cleaned, and mapped complex survey datasets (5,000+ respondents) into standardized relational schemas using Python and SQL.",
+                        "Executed rigorous quantitative analysis using SPSS and R, running multiple linear regression, ANOVA, and chi-square distribution tests.",
+                        "Authored comprehensive data governance and methodology documentation outlining sampling frames, validation logic, and audit procedures.",
+                        "Validated algorithmic logic and firmware scripts in C/C++, conducting error handling and data reconciliation to guarantee system reliability."
+                    ]
+                }
+            ];
+
+            // Education & Certifications
+            const education = [
+                {
+                    degree: "Master of Science in Analytics",
+                    institution: "Saint Louis University",
+                    location: "St. Louis, MO",
+                    period: "Expected May 2026",
+                    details: "Core Coursework: Machine Learning & AI, Statistical Modeling, Data Warehousing, Deep Learning (CNN, RNN, LSTM, Transformers), LLM Fine-Tuning & Prompt Engineering, Predictive Big Data Analytics."
+                },
+                {
+                    degree: "Bachelor of Engineering in Electronics & Communication",
+                    institution: "Tribhuvan University",
+                    location: "Kathmandu, Nepal",
+                    period: "2017 – 2023",
+                    details: "Core Coursework: Probability & Statistics, Numerical Methods, Signal Analysis, Embedded Systems, Microprocessors, Control Systems, Digital Logic."
+                }
+            ];
+
+            const certifications = [
+                { title: "Data Visualization & KPI Communication", issuer: "Advanced Visual Storytelling & Dashboard Design", icon: "pie-chart" },
+                { title: "Project Management Certification", issuer: "Agile/Scrum Methodologies, Risk Mitigation & Scope", icon: "check-circle" },
+                { title: "Machine Learning A-Z (Python & R)", issuer: "Supervised/Unsupervised Learning, Regression & NLP", icon: "cpu" },
+                { title: "Advanced Microsoft Excel & Power Query", issuer: "Relational Modeling, Dynamic Arrays & Power Pivot", icon: "file-spreadsheet" }
+            ];
+
+            // Code Snippets for Interactive Sandbox
+            const codeSnippets = {
+                sql: `-- Production SCD Type-2 Employee Dimension Update with CTEs
+WITH staged_changes AS (
+    SELECT 
+        s.emp_id, s.department, s.salary, s.title,
+        CURRENT_DATE AS effective_date,
+        DATE '9999-12-31' AS end_date,
+        1 AS is_current
+    FROM stg_workforce_updates s
+    JOIN dim_employee_scd d 
+      ON s.emp_id = d.emp_id AND d.is_current = 1
+    WHERE s.department <> d.department 
+       OR s.salary <> d.salary
+       OR s.title <> d.title
+),
+expired_records AS (
+    UPDATE dim_employee_scd d
+    SET end_date = s.effective_date - INTERVAL '1 day',
+        is_current = 0
+    FROM staged_changes s
+    WHERE d.emp_id = s.emp_id AND d.is_current = 1
+)
+INSERT INTO dim_employee_scd (
+    emp_surrogate_key, emp_id, department, salary, title, effective_date, end_date, is_current
+)
+SELECT 
+    GEN_RANDOM_UUID(), emp_id, department, salary, title, effective_date, end_date, is_current
+FROM staged_changes;`,
+
+                duckdb: `# DuckDB Columnar Aggregation on 34,000+ Synthea EHR Records
+import duckdb
+
+con = duckdb.connect(database=':memory:')
+
+# Fast analytical query computing HbA1c uncontrolled patient risk segments
+query = """
+    SELECT 
+        p.county,
+        COUNT(DISTINCT p.patient_id) AS total_patients,
+        AVG(TRY_CAST(obs.value AS DOUBLE)) AS avg_systolic_bp,
+        COUNT(CASE WHEN obs.code = '4548-4' AND CAST(obs.value AS DOUBLE) >= 9.0 THEN 1 END) AS uncontrolled_diabetics,
+        ROUND(COUNT(CASE WHEN obs.code = '4548-4' AND CAST(obs.value AS DOUBLE) >= 9.0 THEN 1 END) * 100.0 / 
+              NULLIF(COUNT(DISTINCT p.patient_id), 0), 2) AS uncontrolled_pct
+    FROM 'synthea_patients.parquet' p
+    LEFT JOIN 'synthea_observations.parquet' obs 
+      ON p.patient_id = obs.patient_id
+    WHERE obs.date >= CURRENT_DATE - INTERVAL 365 DAY
+    GROUP BY p.county
+    HAVING total_patients >= 50
+    ORDER BY uncontrolled_pct DESC;
+"""
+result_df = con.execute(query).df()
+print(result_df.head())`,
+
+                shap: `# Explainable AI (XAI) with SHAP TreeExplainer for Clinical Risk
+import shap
+import xgboost as xgb
+
+# Train XGBoost risk classifier
+model = xgb.XGBClassifier(n_estimators=100, max_depth=4, learning_rate=0.05)
+model.fit(X_train, y_train)
+
+# Deconstruct individual patient risk factors for clinician interpretability
+explainer = shap.TreeExplainer(model)
+shap_values = explainer.shap_values(X_test)
+
+# Counterfactual "What-If" vital stabilization simulation
+def simulate_intervention(patient_row, systolic_delta=-15, hba1c_delta=-1.2):
+    modified = patient_row.copy()
+    modified['systolic_bp'] += systolic_delta
+    modified['recent_hba1c'] += hba1c_delta
+    
+    baseline_risk = model.predict_proba([patient_row.values])[0][1]
+    stabilized_risk = model.predict_proba([modified.values])[0][1]
+    
+    return {
+        "baseline_risk": f"{baseline_risk:.1%}",
+        "stabilized_risk": f"{stabilized_risk:.1%}",
+        "risk_reduction": f"{(baseline_risk - stabilized_risk):.1%}"
+    }`
+            };
+
+            return (
+                <div className="relative min-h-screen">
+                    {/* Navigation Bar */}
+                    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'py-3.5 glass-panel shadow-2xl border-b border-white/10' : 'py-6 bg-transparent'}`}>
+                        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+                            {/* Brand / Logo */}
+                            <a href="#home" className="flex items-center gap-3 group">
+                                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-accent-pink p-[1.5px] shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                                    <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
+                                        <span className="font-mono font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-pink-300 text-sm">AB</span>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-sm font-extrabold tracking-wider text-white uppercase group-hover:text-brand-300 transition-colors">
+                                        Asmi Basnet
+                                    </span>
+                                    <span className="text-[10px] font-medium text-slate-400 tracking-widest uppercase">
+                                        Analytics & AI Specialist
+                                    </span>
+                                </div>
+                            </a>
+
+                            {/* Desktop Menu */}
+                            <div className="hidden md:flex items-center gap-7">
+                                {[
+                                    { id: 'home', label: 'Home' },
+                                    { id: 'roles', label: 'Expertise' },
+                                    { id: 'skills', label: 'Skills' },
+                                    { id: 'experience', label: 'Experience' },
+                                    { id: 'projects', label: 'Projects' },
+                                    { id: 'architecture', label: 'Code Vault' },
+                                    { id: 'education', label: 'Education' }
+                                ].map(item => (
+                                    <a
+                                        key={item.id}
+                                        href={`#${item.id}`}
+                                        className={`text-xs font-semibold tracking-wider uppercase transition-colors relative py-1 ${
+                                            activeSection === item.id ? 'text-brand-300' : 'text-slate-300 hover:text-white'
+                                        }`}
+                                    >
+                                        {item.label}
+                                        {activeSection === item.id && (
+                                            <span className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-brand-400 to-pink-400 rounded-full"></span>
+                                        )}
+                                    </a>
+                                ))}
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="hidden lg:flex items-center gap-3">
+                                <a
+                                    href="https://github.com/AsmiBasnet"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/60 text-slate-300 hover:text-white hover:border-brand-400/50 transition-all hover:scale-105"
+                                    title="GitHub Profile"
+                                >
+                                    <Icon name="github" className="w-4 h-4" />
+                                </a>
+                                <a
+                                    href="https://linkedin.com/in/asmibasnet/"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/60 text-slate-300 hover:text-sky-400 hover:border-sky-400/50 transition-all hover:scale-105"
+                                    title="LinkedIn Profile"
+                                >
+                                    <Icon name="linkedin" className="w-4 h-4" />
+                                </a>
+                                <a
+                                    href="#contact"
+                                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-500 to-accent-purple text-white text-xs font-bold uppercase tracking-wider shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:scale-[1.02] transition-all flex items-center gap-2"
+                                >
+                                    <Icon name="send" className="w-3.5 h-3.5" />
+                                    Get In Touch
+                                </a>
+                            </div>
+
+                            {/* Mobile Menu Button */}
+                            <button
+                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                className="md:hidden p-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-300"
+                            >
+                                <Icon name={mobileMenuOpen ? "x" : "menu"} className="w-5 h-5" />
+                            </button>
+                        </div>
+
+                        {/* Mobile Dropdown */}
+                        {mobileMenuOpen && (
+                            <div className="md:hidden glass-panel border-t border-white/10 px-6 py-6 mt-3 space-y-4">
+                                {['Home', 'Roles', 'Skills', 'Experience', 'Projects', 'Architecture', 'Education', 'Contact'].map(item => (
+                                    <a
+                                        key={item}
+                                        href={`#${item.toLowerCase()}`}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="block text-sm font-bold uppercase tracking-wider text-slate-300 hover:text-brand-300 py-1"
+                                    >
+                                        {item}
+                                    </a>
+                                ))}
+                                <div className="pt-4 flex gap-3 border-t border-white/10">
+                                    <a
+                                        href="https://github.com/AsmiBasnet"
+                                        target="_blank"
+                                        className="flex-1 py-2 rounded-lg bg-slate-800 text-center text-xs font-bold text-white flex items-center justify-center gap-2"
+                                    >
+                                        <Icon name="github" className="w-4 h-4" /> GitHub
+                                    </a>
+                                    <a
+                                        href="https://linkedin.com/in/asmibasnet/"
+                                        target="_blank"
+                                        className="flex-1 py-2 rounded-lg bg-blue-700 text-center text-xs font-bold text-white flex items-center justify-center gap-2"
+                                    >
+                                        <Icon name="linkedin" className="w-4 h-4" /> LinkedIn
+                                    </a>
+                                </div>
+                            </div>
+                        )}
+                    </nav>
+
+                    {/* HERO SECTION */}
+                    <section id="home" className="pt-36 md:pt-44 pb-20 px-6 relative overflow-hidden">
+                        <div className="max-w-6xl mx-auto">
+                            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+                                
+                                {/* Hero Left Content */}
+                                <div className="flex-1 text-center lg:text-left">
+                                    <div className="inline-flex items-center gap-2.5 px-4 py-1.5 mb-6 rounded-full border border-brand-400/30 bg-brand-500/10 text-brand-300 text-xs font-bold uppercase tracking-widest shadow-inner">
+                                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                        Open to Relocate / Remote • Tallahassee, FL & STL
+                                    </div>
+
+                                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-[900] tracking-tight leading-[1.08] mb-6 gradient-text">
+                                        Architecting Data Warehouses, Clinical Insights & AI Engines.
+                                    </h1>
+
+                                    <p className="text-base sm:text-lg text-slate-300 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-normal">
+                                        Hi, I'm <span className="text-white font-bold">Asmi Basnet</span> — completing my <span className="text-brand-300 font-semibold">Master of Science in Analytics</span> at Saint Louis University. I bridge analytical modeling, Slowly Changing Dimensions (SCD Type-2), healthcare informatics, and autonomous GenAI systems to empower leadership decisions.
+                                    </p>
+
+                                    {/* Action Buttons */}
+                                    <div className="flex flex-wrap justify-center lg:justify-start items-center gap-4 mb-10">
+                                        <a
+                                            href="#projects"
+                                            className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 via-sky-500 to-accent-purple text-white text-sm font-bold uppercase tracking-wider shadow-xl shadow-brand-500/25 hover:shadow-brand-500/40 hover:scale-105 transition-all flex items-center gap-2"
+                                        >
+                                            <Icon name="folder-git-2" className="w-4 h-4" />
+                                            Explore Projects
+                                        </a>
+
+                                        <button
+                                            onClick={copyEmail}
+                                            className="px-6 py-3.5 rounded-xl bg-slate-900 border border-slate-700/80 text-slate-200 hover:text-white hover:border-brand-400/50 hover:bg-slate-800 text-sm font-bold uppercase tracking-wider transition-all flex items-center gap-2"
+                                        >
+                                            <Icon name={copiedEmail ? "check" : "mail"} className={`w-4 h-4 ${copiedEmail ? 'text-emerald-400' : ''}`} />
+                                            {copiedEmail ? "Email Copied!" : "Copy Email"}
+                                        </button>
+
+                                        <a
+                                            href="https://github.com/AsmiBasnet"
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="px-5 py-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-600 text-sm font-bold flex items-center gap-2 transition-all"
+                                        >
+                                            <Icon name="github" className="w-4 h-4" />
+                                            GitHub
+                                        </a>
+                                    </div>
+
+                                    {/* Quick Contact Line */}
+                                    <div className="flex flex-wrap justify-center lg:justify-start items-center gap-6 text-xs text-slate-400 font-medium">
+                                        <span className="flex items-center gap-1.5">
+                                            <Icon name="mail" className="w-3.5 h-3.5 text-brand-400" />
+                                            asmibas18@gmail.com
+                                        </span>
+                                        <span className="flex items-center gap-1.5">
+                                            <Icon name="phone" className="w-3.5 h-3.5 text-pink-400" />
+                                            (314) 732-5088
+                                        </span>
+                                        <span className="flex items-center gap-1.5">
+                                            <Icon name="map-pin" className="w-3.5 h-3.5 text-emerald-400" />
+                                            Tallahassee, FL (Open to Relocate)
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Hero Right Card / Profile */}
+                                <div className="flex-shrink-0 relative">
+                                    <div className="profile-ring relative z-10 animate-float">
+                                        <img
+                                            src="./assets/profile.jpg"
+                                            alt="Asmi Basnet"
+                                            className="w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 rounded-full object-cover border-4 border-slate-950 shadow-2xl"
+                                            onError={(e) => {
+                                                e.target.src = 'https://ui-avatars.com/api/?name=Asmi+Basnet&background=0b1329&color=38bdf8&size=512';
+                                            }}
+                                        />
+                                    </div>
+
+                                    {/* Floating Badges */}
+                                    <div className="absolute -bottom-4 -left-4 glass-panel px-4 py-2.5 rounded-2xl flex items-center gap-3 border border-brand-400/30 shadow-xl z-20">
+                                        <div className="w-8 h-8 rounded-xl bg-brand-500/20 text-brand-300 flex items-center justify-center">
+                                            <Icon name="database" className="w-4 h-4" />
+                                        </div>
+                                        <div>
+                                            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Specialty</div>
+                                            <div className="text-xs font-black text-white">SCD Type-2 & DuckDB</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute -top-4 -right-4 glass-panel px-4 py-2.5 rounded-2xl flex items-center gap-3 border border-pink-500/30 shadow-xl z-20">
+                                        <div className="w-8 h-8 rounded-xl bg-pink-500/20 text-pink-300 flex items-center justify-center">
+                                            <Icon name="sparkles" className="w-4 h-4" />
+                                        </div>
+                                        <div>
+                                            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">AI Systems</div>
+                                            <div className="text-xs font-black text-white">RAG & PyTorch</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* METRICS & NUMERICAL IMPACT BAR */}
+                    <section id="metrics" className="py-12 px-6 border-y border-white/5 bg-slate-950/40">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                                {[
+                                    { value: "34,000+", label: "Patient Records", sub: "Synthea EHR / DuckDB", color: "text-sky-400" },
+                                    { value: "62,000+", label: "Clinical Records", sub: "WashU ML Pipeline", color: "text-pink-400" },
+                                    { value: "10,000+", label: "Workforce Audits", sub: "SCD Type-2 Engine", color: "text-indigo-400" },
+                                    { value: "90%", label: "Research Saved", sub: "Agentic Multi-Agent AI", color: "text-emerald-400" },
+                                    { value: "6+", label: "BI Dashboards", sub: "15+ Executive KPIs", color: "text-amber-400" },
+                                    { value: "40%", label: "Query Speedup", sub: "SQL CTE Refactoring", color: "text-cyan-400" }
+                                ].map((m, idx) => (
+                                    <div key={idx} className="glass-card p-5 rounded-2xl text-center flex flex-col justify-center">
+                                        <div className={`text-2xl sm:text-3xl font-[900] ${m.color} mb-1 tracking-tight font-mono`}>
+                                            {m.value}
+                                        </div>
+                                        <div className="text-xs font-extrabold text-white tracking-wide uppercase">{m.label}</div>
+                                        <div className="text-[10px] text-slate-400 font-medium mt-1">{m.sub}</div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* TARGET PROFILE & EXPERTISE TABS */}
+                    <section id="roles" className="py-24 px-6 relative">
+                        <div className="max-w-6xl mx-auto">
+                            <div className="text-center mb-16">
+                                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-300 text-xs font-extrabold uppercase tracking-widest mb-3">
+                                    <Icon name="crosshair" className="w-3.5 h-3.5" /> Target Role Profiles
+                                </div>
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl font-[900] tracking-tight text-white mb-4">
+                                    Multidisciplinary Analytical Expertise
+                                </h2>
+                                <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                                    Switch between functional lenses to review tailored executive competencies, technical tooling, and proven business outcomes.
+                                </p>
+                            </div>
+
+                            {/* Tab Selectors */}
+                            <div className="flex flex-wrap justify-center gap-3 mb-10">
+                                {roleProfiles.map((role, idx) => (
+                                    <button
+                                        key={role.id}
+                                        onClick={() => setActiveRoleIndex(idx)}
+                                        className={`px-5 py-3 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center gap-2.5 transition-all ${
+                                            activeRoleIndex === idx
+                                                ? 'bg-gradient-to-r from-brand-600 to-accent-purple text-white shadow-lg shadow-brand-500/25 border-transparent'
+                                                : 'bg-slate-900/90 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                                        }`}
+                                    >
+                                        <Icon name={role.icon} className="w-4 h-4" />
+                                        {role.title.split('/')[0]}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Active Role Content Card */}
+                            <div className="glass-panel p-8 md:p-12 rounded-[2rem] border border-white/10 relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl pointer-events-none"></div>
+                                
+                                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-8 border-b border-white/10 mb-8">
+                                    <div>
+                                        <span className="inline-block px-3 py-1 rounded-md bg-brand-500/10 text-brand-300 text-[10px] font-black uppercase tracking-widest mb-2">
+                                            {roleProfiles[activeRoleIndex].tag}
+                                        </span>
+                                        <h3 className="text-2xl sm:text-3xl font-[900] text-white tracking-tight">
+                                            {roleProfiles[activeRoleIndex].title}
+                                        </h3>
+                                    </div>
+                                    <div className="px-4 py-2 rounded-xl bg-slate-950 border border-slate-800 text-slate-300 font-mono text-xs">
+                                        {roleProfiles[activeRoleIndex].badge}
+                                    </div>
+                                </div>
+
+                                <p className="text-slate-300 text-base leading-relaxed mb-8 font-normal">
+                                    {roleProfiles[activeRoleIndex].summary}
+                                </p>
+
+                                <div className="space-y-4">
+                                    <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest">
+                                        Key Operational Accomplishments:
+                                    </h4>
+                                    <div className="grid md:grid-cols-3 gap-4">
+                                        {roleProfiles[activeRoleIndex].highlights.map((h, i) => (
+                                            <div key={i} className="p-5 rounded-2xl bg-slate-950/60 border border-white/5 flex flex-col justify-between">
+                                                <div className="flex items-start gap-3 mb-2">
+                                                    <div className="w-6 h-6 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <Icon name="check" className="w-3.5 h-3.5" />
+                                                    </div>
+                                                    <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                                                        {h}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* TECHNICAL SKILLS MATRIX */}
+                    <section id="skills" className="py-24 px-6 bg-slate-950/30 border-y border-white/5">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="text-center mb-16">
+                                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-pink-500/10 border border-pink-500/20 text-pink-300 text-xs font-extrabold uppercase tracking-widest mb-3">
+                                    <Icon name="cpu" className="w-3.5 h-3.5" /> Technical Infrastructure
+                                </div>
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl font-[900] tracking-tight text-white mb-4">
+                                    Master Technical Skills Inventory
+                                </h2>
+                                <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                                    Production-tested competencies across relational databases, distributed query engines, enterprise BI, machine learning, and data governance.
+                                </p>
+                            </div>
+
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {skillCategories.map((cat, idx) => (
+                                    <div key={idx} className="glass-card p-7 rounded-[1.75rem] flex flex-col justify-between">
+                                        <div>
+                                            <div className="flex items-center gap-3 mb-5">
+                                                <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${cat.color} border flex items-center justify-center shadow-lg`}>
+                                                    <Icon name={cat.icon} className="w-5 h-5" />
+                                                </div>
+                                                <h3 className="text-lg font-extrabold text-white tracking-tight">{cat.title}</h3>
+                                            </div>
+
+                                            <div className="flex flex-wrap gap-2 mb-4">
+                                                {cat.skills.map((skill, sIdx) => (
+                                                    <span
+                                                        key={sIdx}
+                                                        className="px-3 py-1.5 rounded-lg bg-slate-950/80 border border-white/5 text-[11px] font-semibold text-slate-300 hover:text-white hover:border-brand-400/30 transition-colors"
+                                                    >
+                                                        {skill}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* CAREER EXPERIENCE */}
+                    <section id="experience" className="py-24 px-6">
+                        <div className="max-w-5xl mx-auto">
+                            <div className="text-center mb-16">
+                                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-extrabold uppercase tracking-widest mb-3">
+                                    <Icon name="briefcase" className="w-3.5 h-3.5" /> Career Architecture
+                                </div>
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl font-[900] tracking-tight text-white mb-4">
+                                    Professional Experience
+                                </h2>
+                                <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                                    Track record in accelerating decision delivery, automating ETL operations, and standardizing analytics workflows.
+                                </p>
+                            </div>
+
+                            <div className="space-y-12 relative before:absolute before:inset-0 before:left-6 md:before:left-8 before:w-0.5 before:bg-gradient-to-b before:from-brand-500 before:via-pink-500 before:to-slate-800">
+                                {experience.map((exp, idx) => (
+                                    <div key={idx} className="relative pl-14 md:pl-20">
+                                        {/* Timeline Dot */}
+                                        <div className={`absolute left-4 md:left-6 top-1.5 w-5 h-5 rounded-full -translate-x-1/2 border-4 border-slate-950 ${
+                                            exp.current ? 'bg-brand-400 shadow-[0_0_15px_rgba(56,189,248,0.8)]' : 'bg-pink-500'
+                                        }`}></div>
+
+                                        <div className="glass-panel p-8 rounded-3xl border border-white/10 hover:border-brand-400/30 transition-all">
+                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
+                                                <div>
+                                                    <span className="inline-block px-3 py-1 rounded-md bg-brand-500/10 text-brand-300 text-[10px] font-black uppercase tracking-widest mb-2">
+                                                        {exp.period}
+                                                    </span>
+                                                    <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                                                        {exp.role}
+                                                    </h3>
+                                                    <div className="text-sm font-bold text-pink-300 flex items-center gap-2 mt-1">
+                                                        <span>{exp.company}</span>
+                                                        <span className="text-slate-600">•</span>
+                                                        <span className="text-slate-400 font-medium">{exp.location}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <p className="text-slate-300 text-sm italic mb-6 font-medium">
+                                                "{exp.description}"
+                                            </p>
+
+                                            <div className="space-y-2.5">
+                                                {exp.bullets.map((b, bIdx) => (
+                                                    <div key={bIdx} className="flex items-start gap-3">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 flex-shrink-0"></div>
+                                                        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                                            {b}
+                                                        </p>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* FEATURED PROJECTS SHOWCASE */}
+                    <section id="projects" className="py-24 px-6 bg-slate-950/40 border-t border-white/5">
+                        <div className="max-w-7xl mx-auto">
+                            <div className="text-center mb-14">
+                                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-300 text-xs font-extrabold uppercase tracking-widest mb-3">
+                                    <Icon name="code-2" className="w-3.5 h-3.5" /> Project Portfolio
+                                </div>
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl font-[900] tracking-tight text-white mb-4">
+                                    Applied Analytics & AI Systems
+                                </h2>
+                                <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                                    Production architectures spanning healthcare informatics, dimensional warehousing, high-dimensional forecasting, and multi-agent GenAI.
+                                </p>
+                            </div>
+
+                            {/* Filter Buttons */}
+                            <div className="flex flex-wrap justify-center gap-2.5 mb-14">
+                                {[
+                                    { id: 'all', label: 'All Projects', count: projects.length },
+                                    { id: 'featured', label: 'Featured Top Tier', count: projects.filter(p => p.featured).length },
+                                    { id: 'healthcare', label: 'Healthcare & Clinical AI', count: projects.filter(p => p.category === 'healthcare').length },
+                                    { id: 'engineering', label: 'SQL & Data Engineering', count: projects.filter(p => p.category === 'engineering').length },
+                                    { id: 'ai-ml', label: 'Machine Learning & GenAI', count: projects.filter(p => p.category === 'ai-ml').length },
+                                    { id: 'bi', label: 'BI & Real-Time Dashboards', count: projects.filter(p => p.category === 'bi').length }
+                                ].map(f => (
+                                    <button
+                                        key={f.id}
+                                        onClick={() => setProjectFilter(f.id)}
+                                        className={`px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 ${
+                                            projectFilter === f.id
+                                                ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/30'
+                                                : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                                        }`}
+                                    >
+                                        <span>{f.label}</span>
+                                        <span className={`px-1.5 py-0.5 rounded text-[10px] ${
+                                            projectFilter === f.id ? 'bg-white/20 text-white' : 'bg-slate-800 text-slate-400'
+                                        }`}>{f.count}</span>
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Projects Grid */}
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredProjects.map((proj) => (
+                                    <div
+                                        key={proj.id}
+                                        className="glass-card rounded-[2rem] flex flex-col justify-between overflow-hidden group cursor-pointer"
+                                        onClick={() => setSelectedProject(proj)}
+                                    >
+                                        <div>
+                                            {/* Image & Header */}
+                                            <div className="h-48 relative overflow-hidden">
+                                                <img
+                                                    src={proj.img}
+                                                    alt={proj.title}
+                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+                                                
+                                                <div className="absolute top-4 left-4">
+                                                    <span className="px-3 py-1 rounded-lg bg-slate-900/90 backdrop-blur-md border border-white/10 text-[10px] font-black uppercase tracking-wider text-brand-300">
+                                                        {proj.badge}
+                                                    </span>
+                                                </div>
+
+                                                <div className="absolute bottom-4 left-5 right-5 flex items-center justify-between">
+                                                    <div className="w-10 h-10 rounded-xl bg-brand-500/20 backdrop-blur-md border border-brand-400/30 flex items-center justify-center text-brand-300 shadow-lg group-hover:rotate-12 transition-transform">
+                                                        <Icon name={proj.icon} className="w-5 h-5" />
+                                                    </div>
+                                                    <span className="text-[10px] font-mono font-semibold text-pink-300 bg-pink-950/80 px-2.5 py-1 rounded-md border border-pink-500/30">
+                                                        Deep Dive →
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            {/* Body */}
+                                            <div className="p-6">
+                                                <h3 className="text-xl font-black text-white tracking-tight mb-2 group-hover:text-brand-300 transition-colors">
+                                                    {proj.title}
+                                                </h3>
+                                                <p className="text-xs text-slate-400 leading-relaxed mb-4 line-clamp-3 font-normal">
+                                                    {proj.description}
+                                                </p>
+
+                                                {/* Metrics Badge */}
+                                                <div className="p-2.5 rounded-xl bg-slate-950/80 border border-white/5 text-[11px] font-mono text-emerald-400 mb-4 flex items-center gap-2">
+                                                    <Icon name="check-circle" className="w-3.5 h-3.5 flex-shrink-0" />
+                                                    <span className="truncate">{proj.metrics}</span>
+                                                </div>
+
+                                                {/* Tech Tags */}
+                                                <div className="flex flex-wrap gap-1.5 mb-2">
+                                                    {proj.tags.slice(0, 4).map((tag, tIdx) => (
+                                                        <span
+                                                            key={tIdx}
+                                                            className="px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-[10px] font-semibold text-slate-300"
+                                                        >
+                                                            {tag}
+                                                        </span>
+                                                    ))}
+                                                    {proj.tags.length > 4 && (
+                                                        <span className="px-2 py-1 rounded-md bg-slate-900 text-[10px] font-semibold text-slate-400">
+                                                            +{proj.tags.length - 4}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Card Footer */}
+                                        <div className="px-6 py-4 border-t border-white/5 flex items-center justify-between bg-slate-950/40">
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedProject(proj);
+                                                }}
+                                                className="text-[11px] font-bold uppercase tracking-wider text-brand-400 hover:text-white transition-colors flex items-center gap-1.5"
+                                            >
+                                                <Icon name="info" className="w-3.5 h-3.5" /> Specs & Architecture
+                                            </button>
+
+                                            <a
+                                                href={proj.github}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-brand-400/40 transition-colors"
+                                                title="View GitHub Repository"
+                                            >
+                                                <Icon name="github" className="w-4 h-4" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* INTERACTIVE CODE & ARCHITECTURE VAULT */}
+                    <section id="architecture" className="py-24 px-6">
+                        <div className="max-w-6xl mx-auto">
+                            <div className="text-center mb-16">
+                                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-extrabold uppercase tracking-widest mb-3">
+                                    <Icon name="terminal" className="w-3.5 h-3.5" /> Technical Architecture
+                                </div>
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl font-[900] tracking-tight text-white mb-4">
+                                    Production Logic & Code Vault
+                                </h2>
+                                <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                                    Inspect actual query patterns and pipeline scripts powering SCD Type-2 data warehouses, columnar DuckDB medical engines, and XAI explainability.
+                                </p>
+                            </div>
+
+                            <div className="glass-panel rounded-[2rem] border border-white/10 overflow-hidden shadow-2xl">
+                                {/* Code Header Tabs */}
+                                <div className="flex flex-wrap items-center justify-between border-b border-white/10 bg-slate-950/80 px-6 py-4">
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+                                        <span className="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+                                        <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+                                        <span className="ml-3 font-mono text-xs text-slate-400">~/production-pipelines/</span>
+                                    </div>
+
+                                    <div className="flex items-center gap-2 mt-2 sm:mt-0">
+                                        {[
+                                            { id: 'sql', label: 'SCD Type-2 SQL', icon: 'database' },
+                                            { id: 'duckdb', label: 'DuckDB 34k EHR', icon: 'zap' },
+                                            { id: 'shap', label: 'SHAP Explainability', icon: 'cpu' }
+                                        ].map(tab => (
+                                            <button
+                                                key={tab.id}
+                                                onClick={() => setActiveCodeTab(tab.id)}
+                                                className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold flex items-center gap-2 transition-all ${
+                                                    activeCodeTab === tab.id
+                                                        ? 'bg-brand-500/20 text-brand-300 border border-brand-400/40'
+                                                        : 'text-slate-400 hover:text-white'
+                                                }`}
+                                            >
+                                                <Icon name={tab.icon} className="w-3.5 h-3.5" />
+                                                {tab.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Code Body */}
+                                <div className="p-6 md:p-8 bg-[#090d1a] overflow-x-auto">
+                                    <pre className="text-xs md:text-sm font-mono text-slate-200 leading-relaxed">
+                                        <code>{codeSnippets[activeCodeTab]}</code>
+                                    </pre>
+                                </div>
+
+                                {/* Code Footer */}
+                                <div className="px-8 py-4 bg-slate-950/60 border-t border-white/5 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-400 font-mono">
+                                    <div className="flex items-center gap-2">
+                                        <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                        <span>Status: Tested & Production Ready</span>
+                                    </div>
+                                    <a
+                                        href="https://github.com/AsmiBasnet"
+                                        target="_blank"
+                                        className="text-brand-300 hover:text-white transition-colors flex items-center gap-1.5"
+                                    >
+                                        <Icon name="github" className="w-3.5 h-3.5" />
+                                        Explore All Repositories →
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* EDUCATION & CERTIFICATIONS */}
+                    <section id="education" className="py-24 px-6 bg-slate-950/30 border-t border-white/5">
+                        <div className="max-w-6xl mx-auto">
+                            <div className="text-center mb-16">
+                                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-extrabold uppercase tracking-widest mb-3">
+                                    <Icon name="graduation-cap" className="w-3.5 h-3.5" /> Academic Path & Credentials
+                                </div>
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl font-[900] tracking-tight text-white mb-4">
+                                    Education & Certifications
+                                </h2>
+                                <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
+                                    Rigorous grounding in advanced analytics, probability & statistics, embedded systems, and machine learning engineering.
+                                </p>
+                            </div>
+
+                            <div className="grid lg:grid-cols-2 gap-8 mb-12">
+                                {education.map((edu, idx) => (
+                                    <div key={idx} className="glass-panel p-8 rounded-3xl border border-white/10 flex flex-col justify-between">
+                                        <div>
+                                            <span className="inline-block px-3 py-1 rounded-md bg-purple-500/10 text-purple-300 text-[10px] font-black uppercase tracking-widest mb-3">
+                                                {edu.period}
+                                            </span>
+                                            <h3 className="text-2xl font-black text-white tracking-tight mb-1">
+                                                {edu.degree}
+                                            </h3>
+                                            <div className="text-sm font-bold text-brand-300 mb-4">
+                                                {edu.institution} <span className="text-slate-500">•</span> <span className="text-slate-400 font-medium">{edu.location}</span>
+                                            </div>
+                                            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                                                {edu.details}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Certifications Grid */}
+                            <div className="glass-panel p-8 rounded-3xl border border-white/10">
+                                <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                    <Icon name="award" className="w-4 h-4 text-brand-400" />
+                                    Professional Certifications & Training
+                                </h3>
+                                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                    {certifications.map((cert, idx) => (
+                                        <div key={idx} className="p-5 rounded-2xl bg-slate-950/70 border border-white/5 flex flex-col justify-between">
+                                            <div>
+                                                <div className="w-8 h-8 rounded-lg bg-brand-500/10 text-brand-300 flex items-center justify-center mb-3">
+                                                    <Icon name={cert.icon} className="w-4 h-4" />
+                                                </div>
+                                                <h4 className="text-sm font-bold text-white mb-1 leading-snug">{cert.title}</h4>
+                                                <p className="text-[11px] text-slate-400 leading-relaxed">{cert.issuer}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* PROJECT DETAILS MODAL */}
+                    {selectedProject && (
+                        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-xl animate-fadeIn">
+                            <div className="glass-panel w-full max-w-3xl max-h-[90vh] rounded-[2.5rem] border border-white/15 overflow-y-auto shadow-2xl flex flex-col">
+                                <div className="sticky top-0 z-10 glass-panel border-b border-white/10 px-8 py-5 flex items-center justify-between">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-lg bg-brand-500/20 text-brand-300 flex items-center justify-center">
+                                            <Icon name={selectedProject.icon} className="w-4 h-4" />
+                                        </div>
+                                        <div>
+                                            <span className="text-[10px] font-black uppercase text-brand-300 tracking-wider">
+                                                {selectedProject.badge}
+                                            </span>
+                                            <h3 className="text-lg font-black text-white leading-none">
+                                                {selectedProject.title}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => setSelectedProject(null)}
+                                        className="p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+                                    >
+                                        <Icon name="x" className="w-5 h-5" />
+                                    </button>
+                                </div>
+
+                                <div className="p-8 space-y-6">
+                                    <div className="h-56 rounded-2xl overflow-hidden relative">
+                                        <img src={selectedProject.img} alt={selectedProject.title} className="w-full h-full object-cover" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                                    </div>
+
+                                    <div>
+                                        <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Project Overview</h4>
+                                        <p className="text-sm text-slate-200 leading-relaxed">
+                                            {selectedProject.description}
+                                        </p>
+                                    </div>
+
+                                    <div className="p-4 rounded-xl bg-slate-950 border border-emerald-500/30 text-xs font-mono text-emerald-300 flex items-center gap-2">
+                                        <Icon name="zap" className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                                        <span><strong>Impact Metric:</strong> {selectedProject.metrics}</span>
+                                    </div>
+
+                                    <div>
+                                        <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Architectural Highlights & Engineering</h4>
+                                        <div className="space-y-2.5">
+                                            {selectedProject.bullets.map((b, idx) => (
+                                                <div key={idx} className="flex items-start gap-3">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-brand-400 mt-2 flex-shrink-0"></div>
+                                                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">{b}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <h4 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3">Technology Stack</h4>
+                                        <div className="flex flex-wrap gap-2">
+                                            {selectedProject.tags.map((tag, idx) => (
+                                                <span key={idx} className="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs font-semibold text-slate-300">
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                                        <a
+                                            href={selectedProject.github}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="px-6 py-3 rounded-xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg shadow-brand-500/20"
+                                        >
+                                            <Icon name="github" className="w-4 h-4" /> View Source on GitHub
+                                        </a>
+
+                                        <button
+                                            onClick={() => setSelectedProject(null)}
+                                            className="px-6 py-3 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-bold uppercase tracking-wider"
+                                        >
+                                            Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* CONTACT & HIRE ME CTA */}
+                    <section id="contact" className="py-28 px-6 relative overflow-hidden">
+                        <div className="max-w-5xl mx-auto glass-panel rounded-[3rem] p-10 md:p-16 text-center relative overflow-hidden border border-white/10 shadow-2xl">
+                            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+                            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-pink-500/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+                            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-extrabold uppercase tracking-widest mb-6">
+                                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Available For Full-Time Opportunities
+                            </div>
+
+                            <h2 className="text-4xl sm:text-5xl md:text-6xl font-[900] tracking-tight mb-6 gradient-text">
+                                Let's Build Strategic Alpha Together.
+                            </h2>
+
+                            <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-normal">
+                                Currently evaluating roles in <span className="text-white font-bold">Analytics Engineering</span>, <span className="text-brand-300 font-bold">Healthcare Informatics</span>, <span className="text-pink-300 font-bold">Data Analytics & BI</span>, and <span className="text-purple-300 font-bold">Machine Learning</span>.
+                            </p>
+
+                            <div className="flex flex-wrap justify-center items-center gap-4 mb-10">
+                                <a
+                                    href="mailto:asmibas18@gmail.com"
+                                    className="px-8 py-4 rounded-xl bg-gradient-to-r from-brand-500 via-sky-500 to-accent-purple text-white text-sm font-bold uppercase tracking-wider shadow-xl shadow-brand-500/30 hover:scale-105 transition-all flex items-center gap-2"
+                                >
+                                    <Icon name="mail" className="w-4 h-4" />
+                                    asmibas18@gmail.com
+                                </a>
+
+                                <a
+                                    href="tel:3147325088"
+                                    className="px-6 py-4 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 hover:text-white hover:border-slate-500 text-sm font-bold uppercase tracking-wider flex items-center gap-2 transition-all"
+                                >
+                                    <Icon name="phone" className="w-4 h-4 text-emerald-400" />
+                                    (314) 732-5088
+                                </a>
+
+                                <a
+                                    href="https://linkedin.com/in/asmibasnet/"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="p-4 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 hover:text-sky-400 hover:border-sky-400/50 transition-all"
+                                    title="LinkedIn Profile"
+                                >
+                                    <Icon name="linkedin" className="w-5 h-5" />
+                                </a>
+
+                                <a
+                                    href="https://github.com/AsmiBasnet"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="p-4 rounded-xl bg-slate-900 border border-slate-700 text-slate-300 hover:text-white hover:border-slate-500 transition-all"
+                                    title="GitHub Profile"
+                                >
+                                    <Icon name="github" className="w-5 h-5" />
+                                </a>
+                            </div>
+
+                            <div className="text-xs text-slate-400 font-mono">
+                                Location: Tallahassee, FL • Open to Relocate / Hybrid / Remote
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* FOOTER */}
+                    <footer className="py-12 border-t border-white/5 text-center relative">
+                        <div className="max-w-7xl mx-auto px-6">
+                            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                                <div className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                                    <span className="font-mono text-brand-400">ASMI BASNET</span>
+                                    <span>•</span>
+                                    <span>Data & AI Portfolio</span>
+                                </div>
+
+                                <div className="text-xs text-slate-500 font-medium">
+                                    Designed with React, Tailwind CSS & High-Entropy Precision
+                                </div>
+
+                                <div className="flex items-center gap-4 text-xs font-semibold text-slate-400">
+                                    <a href="#home" className="hover:text-white transition-colors">Back to Top ↑</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

@@ -136,6 +136,10 @@ nav a:hover{color:var(--primary)}
 .tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.3rem}
 .tags span{background:var(--tag-bg);border-radius:999px;padding:.3rem .8rem;font-size:.75rem;font-weight:700}
 .explore{margin-top:auto;padding-top:.8rem;font-weight:700;font-size:.92rem}
+.card-links{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:auto;padding-top:.85rem;border-top:1px solid var(--border)}
+.card-btn{background:var(--text);color:var(--bg)!important;font-size:.78rem;font-weight:700;padding:.45rem .85rem;border-radius:999px;transition:transform .2s;text-decoration:none;display:inline-flex;align-items:center;border:1px solid var(--text);cursor:pointer}
+.card-btn:hover{transform:translateY(-2px);opacity:.9}
+.card-btn.secondary{background:var(--card);color:var(--text)!important;border:1px solid var(--border)}
 .center{text-align:center;margin-top:3rem}
 .btn-outline{display:inline-block;border:1px solid var(--text);border-radius:999px;padding:.9rem 2rem;font-weight:600;font-size:.9rem;transition:transform .3s}
 .btn-outline:hover{transform:translateY(-3px)}
@@ -527,46 +531,46 @@ const ART=[POLICY,ART_RAW[7],ART_RAW[1],ART_RAW[0],ART_RAW[2],ART_RAW[3],ART_RAW
 const artCss=i=>{const svg=ART[i%ART.length]();return `linear-gradient(180deg,rgba(0,0,0,.38),rgba(0,0,0,0) 45%),linear-gradient(0deg,rgba(0,0,0,.5),rgba(0,0,0,0) 40%),url('data:image/svg+xml,${encodeURIComponent(svg).replace(/'/g,"%27")}') center/cover`};
 const GH="https://github.com/AsmiBasnet";
 const P=[
-{c:"ai",type:"Offline RAG compliance suite",title:"PolicyGuard: Offline RAG Compliance Suite",lead:true,
- hook:"Ask questions across policy documents and get cited answers, conflict flags and clarifying questions, all without data leaving the machine.",
- overview:"PolicyGuard runs fully offline, so policy documents never leave the machine. A chain-of-thought verification step checks citations, flags contradictory policies (FLAG_CONFLICT) and asks for missing context (CLARIFY), so reviewers see conflicts with their sources instead of reading whole handbooks. It also produces a governance health score from the conflicts found.",
- features:"Cited answers, FLAG_CONFLICT for contradicting policies, CLARIFY when context is missing, a governance health score, and a FastAPI backend with a Streamlit interface, packaged with Docker Compose.",
- results:"v2 is about measuring it. I am building a gold evaluation set that includes unanswerable and conflicting-policy questions, running a baseline against it, then adding an agent layer and automated checks in CI. Measured results will be published here, not before.",
- flow:["Policy docs","ChromaDB index","Ollama LLM","Verify citations","Answer / Clarify / Flag"],diagram:"policy",
- tech:["Python","Ollama (Qwen 2.5 / Llama 3)","ChromaDB","FastAPI","Streamlit","Docker Compose"],metrics:["Fully offline","Citation checks","Conflict detection"],tags:["RAG","Ollama","ChromaDB","FastAPI"],
- links:[["GitHub profile ↗",GH]]},
-{c:"ai",type:"MCP agent tools · Live demo",title:"Nepal Disaster Watch (नेपाल विपद् वाच)",
+{c:"ai",type:"MCP agent tools · Live demo",title:"Nepal Disaster Watch (नेपाल विपद् वाच)",lead:true,
  hook:"A live map app that exposes 11 native WebMCP tools so an AI agent and a human responder look at the same disaster evidence.",
  overview:"Disaster evidence in Nepal is spread across separate sources: NDRRMA/BIPAD incidents, DHM river gauges, Department of Roads closures, UN GDACS alerts, Copernicus GloFAS forecasts and Copernicus EMS damage grading. Nepal Disaster Watch brings them together and exposes 11 native WebMCP tools. Built with Sushrit Kafle for OpenAI's WebMCP Challenge. It is an independent open-source project, not an official warning service.",
  features:"6 read tools, including cross_reference_district, which compares evidence from every source across all 77 districts. 5 write tools that pan the live Leaflet map, filter records and open drill-downs in sync with what the human responder is looking at. Every feed reports its own status (live, unreachable or snapshot), so nothing fails silently.",
  results:"11 WebMCP tools (6 read, 5 write). 6 institutional data sources. Evidence cross-referenced across all 77 districts. Each feed shows live, unreachable or snapshot status.",
  flow:["6 data sources","Feed adapters","WebMCP: 11 tools","Live map"],diagram:"nepal",
  tech:["TypeScript","WebMCP","Leaflet","REST APIs","GeoJSON"],metrics:["11 MCP tools","77 districts","6 sources"],tags:["WebMCP","TypeScript","Leaflet"],
- links:[["Live app ↗","https://asmibasnet.github.io/webMCP/"],["Watch demo ↗","https://www.youtube.com/watch?v=WUSkyWGUuVg"],["GitHub ↗","https://github.com/AsmiBasnet/webMCP"]]},
+ links:[["Live App ↗","https://asmibasnet.github.io/webMCP/"],["GitHub ↗","https://github.com/AsmiBasnet/webMCP"],["Watch Demo ↗","https://www.youtube.com/watch?v=WUSkyWGUuVg"]]},
+{c:"ai",type:"Offline RAG compliance suite",title:"PolicyGuard: Offline RAG Compliance Suite",
+ hook:"Ask questions across policy documents and get cited answers, conflict flags and clarifying questions, all without data leaving the machine.",
+ overview:"PolicyGuard runs fully offline, so policy documents never leave the machine. A chain-of-thought verification step checks citations, flags contradictory policies (FLAG_CONFLICT) and asks for missing context (CLARIFY), so reviewers see conflicts with their sources instead of reading whole handbooks. It also produces a governance health score from the conflicts found.",
+ features:"Cited answers, FLAG_CONFLICT for contradicting policies, CLARIFY when context is missing, a governance health score, and a FastAPI backend with a Streamlit interface, packaged with Docker Compose.",
+ results:"v2 is in active benchmark development: gold evaluation set and automated validation in CI prior to public release.",
+ flow:["Policy docs","ChromaDB index","Ollama LLM","Verify citations","Answer / Clarify / Flag"],diagram:"policy",
+ tech:["Python","Ollama (Qwen 2.5 / Llama 3)","ChromaDB","FastAPI","Streamlit","Docker Compose"],metrics:["Fully offline","Citation checks","Conflict detection"],tags:["RAG","Ollama","ChromaDB","FastAPI"],
+ links:[["Details Above ↑","#projects"],["GitHub Profile ↗",GH]]},
 {c:"ai",type:"Healthcare analytics",title:"CareGap: Clinical Decision Support Prototype",
  hook:"Risk scoring and a retrieval assistant over 34,000+ synthetic (Synthea) patient records.",
  overview:"A risk model (Lasso, Random Forest, XGBoost) for diabetes and hypertension deterioration on 34,000+ synthetic Synthea patient records, with per-patient SHAP explanations and a what-if simulator. A RAG assistant fails over from the local model to Gemini and has guardrails that block dosage suggestions. All data is synthetic.",
  features:"Cohort queries in DuckDB, three-model risk scoring, SHAP explanations, a what-if simulator, CDC growth-chart calculations for patients under 18, and a RAG assistant with failover and guardrails.",
  results:"34,000+ synthetic patient records. 3 models compared. SHAP explanation for every prediction. No clinical accuracy claim is made, because the data is synthetic.",
  flow:["Synthea data","DuckDB","XGBoost","SHAP","RAG assistant"],tech:["Python","DuckDB","scikit-learn","XGBoost","SHAP","FAISS","Ollama","Gemini","Streamlit","Docker"],metrics:["34k+ synthetic records","3-model ensemble","SHAP"],tags:["DuckDB","XGBoost","SHAP"],url:"https://github.com/AsmiBasnet/CAREGAP_APP"},
-{c:"ai",type:"Multi-agent system",title:"Multi-Agent Financial Research System",
- hook:"Two cooperating agents (Market Scout and Financial Analyst) turn live market news into structured briefs.",
- overview:"Two agents built with Agno and OpenAI GPT-4o use tool execution and iterative query refinement to turn live market news into structured briefs. Zapier webhooks triage incoming alerts, score priority and send summaries.",
- features:"Agent-to-agent hand-off, tool calling, query refinement and automated email summaries through Zapier.",
- results:"2 cooperating agents with tool execution. No accuracy or time-saved figure is claimed because none was measured.",
- flow:["Agno agents","GPT-4o","Tools","Zapier"],tech:["Python","Agno","GPT-4o","Zapier","REST APIs"],metrics:["2 agents","Tool calling"],tags:["GPT-4o","Agno","Zapier"],url:GH},
-{c:"ml",type:"Forecasting",title:"Retail Sales Forecasting & Anomaly Detection",
- hook:"Prophet and a PyTorch LSTM combined, with anomaly flags and generated summaries.",
- overview:"Forecasting that combines Facebook Prophet for trend and seasonality with a PyTorch LSTM, plus statistical anomaly alerts and a generated plain-language summary.",
- features:"Hybrid forecasting, outlier detection at +/- 2.5 sigma, confidence intervals and a Streamlit interface.",
- results:"Hybrid Prophet + LSTM model with automated anomaly flags at +/- 2.5 sigma.",
- flow:["Time series","Prophet","LSTM residuals","Anomaly flags","Summary"],tech:["Python","Prophet","PyTorch","scikit-learn","Streamlit"],metrics:["Prophet + LSTM","Anomaly alerts"],tags:["PyTorch","Prophet","Streamlit"],url:"https://github.com/AsmiBasnet/-AI-based-retail-Sales-Forecasting-Anomaly-Detection-System"},
 {c:"data",type:"Data warehouse",title:"SCD Type-2 Workforce Warehouse",
  hook:"Slowly changing dimensions across 10,000+ employee history records in DuckDB.",
  overview:"A data warehouse implementing Slowly Changing Dimension Type 2 with surrogate keys, effective and end timestamps and an is_current flag across 10,000+ employee records, plus an NLP sentiment pass on exit feedback.",
  features:"Historical change tracking, point-in-time queries, tenure analytics and sentiment classification.",
  results:"10,000+ employee records with full change history (surrogate keys, effective and end dates, is_current flag).",
  flow:["Raw events","Staging","SCD Type-2 model","Analytics layer"],tech:["SQL CTEs","Window functions","DuckDB","Streamlit","NLP"],metrics:["10k+ records","Surrogate keys"],tags:["SCD Type-2","DuckDB","SQL"],url:"https://github.com/AsmiBasnet/scd"},
+{c:"data",type:"Data modeling & SQL",title:"E-Commerce Analytics & RFM Segmentation",
+ hook:"Relational schema design modeling 8,000+ transactions with 12 advanced SQL models, CTEs, and cohort retention analysis.",
+ overview:"Relational schema design modeling 8,000+ transactional records across a 5-table normalized schema. Implements 12 production-grade SQL queries with nested CTEs and window functions, RFM customer segmentation, and 3-month cohort retention analysis.",
+ features:"Normalized 5-table schema, RFM customer segmentation, 3-month acquisition cohort retention, and product affinity pairs.",
+ results:"8,000+ transactional records analyzed; identified top 30% customer segment generating 60% of total revenue.",
+ flow:["Transactions","5-table 3NF schema","Modular SQL CTEs","RFM Cohorts"],tech:["PostgreSQL","DuckDB","SQL CTEs","Window Functions","Python","Seaborn"],metrics:["8,000+ records","12 SQL models","RFM Segments"],tags:["SQL CTEs","DuckDB","PostgreSQL"],url:"https://github.com/AsmiBasnet/ecommerce-analytics-sql"},
+{c:"ml",type:"Forecasting",title:"Retail Sales Forecasting & Anomaly Detection",
+ hook:"Prophet and a PyTorch LSTM combined, with anomaly flags and generated summaries.",
+ overview:"Forecasting that combines Facebook Prophet for trend and seasonality with a PyTorch LSTM, plus statistical anomaly alerts and a generated plain-language summary.",
+ features:"Hybrid forecasting, outlier detection at +/- 2.5 sigma, confidence intervals and a Streamlit interface.",
+ results:"Hybrid Prophet + LSTM model with automated anomaly flags at +/- 2.5 sigma.",
+ flow:["Time series","Prophet","LSTM residuals","Anomaly flags","Summary"],tech:["Python","Prophet","PyTorch","scikit-learn","Streamlit"],metrics:["Prophet + LSTM","Anomaly alerts"],tags:["PyTorch","Prophet","Streamlit"],url:"https://github.com/AsmiBasnet/-AI-based-retail-Sales-Forecasting-Anomaly-Detection-System"},
 {c:"ml",type:"Computer vision",title:"Pulmonary Condition Classifier",
  hook:"A custom CNN compared against a pre-trained ResNet on 33,000+ chest X-rays.",
  overview:"Multi-class CNNs trained on 33,000+ chest X-rays (COVID-QU-Ex) with augmentation, dropout, batch norm and learning-rate scheduling, then compared against a pre-trained ResNet.",
@@ -584,8 +588,13 @@ const P=[
  overview:"A detection model that applies New York State GBL 396-r statutory thresholds to transaction data, flags abnormal price surges and produces audit-ready reports.",
  features:"Baseline price computation, surge flags and report export.",
  results:"Applies the NY GBL 396-r threshold to flag price surges and export an audit-ready report.",
- flow:["Transactions","Threshold calc","Outlier flags","Report"],tech:["Python","Pandas","Statistics","Streamlit"],metrics:["GBL 396-r","Surge flags"],tags:["Python","Fraud analytics","Streamlit"],url:"https://github.com/AsmiBasnet/Price-Gouging-Fraud-Detection-Project"}
-];
+ flow:["Transactions","Threshold calc","Outlier flags","Report"],tech:["Python","Pandas","Statistics","Streamlit"],metrics:["GBL 396-r","Surge flags"],tags:["Python","Fraud analytics","Streamlit"],url:"https://github.com/AsmiBasnet/Price-Gouging-Fraud-Detection-Project"},
+{c:"sys",type:"Pattern Detection",title:"Zombie Subscription Detector",
+ hook:"End-to-end analytics detecting recurring billing cycles and stealth price creep from raw transactions.",
+ overview:"Data analytics tool parsing unstructured banking logs using fuzzy tokenizers to flag stealth price increases, calculate payment periodicity, and identify forgotten subscriptions.",
+ features:"Fuzzy matching, recurring periodicity calculation, price drift alerts, and cost-savings analytics.",
+ results:"Automated transaction categorization with diagnostic dashboards for annual cost leakages.",
+ flow:["Bank logs","Fuzzy parser","Periodicity engine","Price drift alerts"],tech:["Python","Pandas","Pattern Recognition","Anomaly Detection"],metrics:["Pattern Detection","Price Drift","Savings Engine"],tags:["Python","Pandas","Anomaly Detection"],url:"https://github.com/AsmiBasnet/AsmiBasnet-zombie-subscription-detector"}];
 P.forEach(p=>{if(!p.links)p.links=[["GitHub ↗",p.url]]});
 const CATS=[["all","All"],["ai","AI & RAG"],["ml","ML & Vision"],["data","Data & SQL"],["sys","Systems"]];
 const $=id=>document.getElementById(id);
@@ -593,7 +602,19 @@ let cur=0,tab="overview",filt="all";
 function cats(){ $("cats").innerHTML=CATS.map(([k,l])=>`<button class="category ${k===filt?'active':''}" data-k="${k}">${l}</button>`).join("");
   $("cats").querySelectorAll(".category").forEach(b=>b.onclick=()=>{filt=b.dataset.k;cats();grid();}); }
 function grid(){ const list=P.map((p,i)=>({p,i})).filter(o=>filt==="all"||o.p.c===filt);
-  $("grid").innerHTML=list.map(o=>`<div class="work-card ${o.i===cur?'sel':''}" data-i="${o.i}" tabindex="0"><div class="work-media" style="background:${artCss(o.i)}">${o.p.flow.slice(0,3).join(" → ")}</div><div class="work-body"><span class="work-type">${o.p.lead?"★ Lead project · ":""}${o.p.type}</span><h3>${o.p.title}</h3><p>${o.p.hook}</p><div class="tags">${o.p.tags.map(t=>`<span>${t}</span>`).join("")}</div><span class="explore">Feature project ↗</span></div></div>`).join("");
+  $("grid").innerHTML=list.map(o=>`<div class="work-card ${o.i===cur?'sel':''}" data-i="${o.i}" tabindex="0">
+    <div class="work-media" style="background:${artCss(o.i)}">${o.p.flow.slice(0,3).join(" → ")}</div>
+    <div class="work-body">
+      <span class="work-type">${o.p.lead?"★ Lead project · ":""}${o.p.type}</span>
+      <h3>${o.p.title}</h3>
+      <p>${o.p.hook}</p>
+      <div class="tags">${o.p.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+      <div class="card-links">
+        ${o.p.links.map(([l,u])=>`<a href="${u}" target="_blank" rel="noopener" class="card-btn" onclick="event.stopPropagation()">${l}</a>`).join("")}
+        <button type="button" class="card-btn secondary" onclick="feature(${o.i},true);event.stopPropagation()">Details ↑</button>
+      </div>
+    </div>
+  </div>`).join("");
   $("grid").querySelectorAll(".work-card").forEach(c=>{const go=()=>feature(+c.dataset.i,true);c.onclick=go;c.onkeydown=e=>{if(e.key==="Enter")go()}}); }
 function body(){ const p=P[cur]; $("tabBody").innerHTML= tab==="tech"? "<b>Stack:</b> "+p.tech.join(" · ") : tab==="arch"? p.flow.join(" → ") : p[tab]; }
 function tabs(){ const T=[["overview","Overview"],["features","Features"],["arch","Architecture"],["results","Results"],["tech","Tech"]];
